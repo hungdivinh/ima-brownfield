@@ -1,0 +1,766 @@
+/* ================================================================
+   IMA BROWNFIELD — MOTION-DRIVEN ANIMATION LAYER
+   Based on UI/UX Pro Max Skill (Motion-Driven style category)
+   + 1Code Best Practices (GPU acceleration, Intersection Observer)
+   
+   Rules:
+   ✓ NO content changes — only visual effects & animations
+   ✓ Preserves blue tone (#24397A / --ima-blue)
+   ✓ Scroll-triggered reveals with Intersection Observer
+   ✓ Micro-interactions on hover/focus
+   ✓ Parallax subtle layers
+   ✓ Entrance animations with stagger
+   ✓ prefers-reduced-motion respected
+================================================================ */
+
+/* ================================================================
+   EXTENDED DESIGN TOKENS
+================================================================ */
+:root {
+  /* Animation durations — Motion-Driven standard: 300–400ms */
+  --anim-fast:   200ms;
+  --anim-std:    350ms;
+  --anim-slow:   550ms;
+  --anim-xslow:  900ms;
+
+  /* Easings */
+  --ease-spring:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo:  cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Scroll reveal defaults */
+  --reveal-translate-y: 28px;
+  --reveal-translate-x: 20px;
+  --reveal-scale: 0.97;
+
+  /* Glow / shimmer */
+  --glow-blue:  rgba(36,57,122,0.18);
+  --glow-accent: rgba(202,238,251,0.25);
+  --shimmer-bg: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(202,238,251,0.15) 50%,
+    transparent 70%
+  );
+
+  /* Parallax Z layers */
+  --parallax-bg-speed:  0.25;
+  --parallax-mid-speed: 0.12;
+}
+
+/* ================================================================
+   SCROLL-BEHAVIOUR GLOBAL
+================================================================ */
+html { scroll-behavior: smooth; }
+
+/* ================================================================
+   GANTT CHART PROTECTION — never override lv1 gantt styles
+================================================================ */
+#lv1-gantt *,
+.lv1-gantt-wrapper *,
+.lv1-gantt-chart *,
+.lv1-bar,
+.lv1-row,
+.lv1-left-panel,
+.lv1-timeline {
+  animation: none !important;
+}
+
+/* Restore lv1-bar hover transitions (defined in page CSS) */
+.lv1-bar {
+  transition: filter .16s ease, transform .16s ease, box-shadow .16s ease !important;
+}
+
+/* CRITICAL: home-wrap must NOT clip the sticky gantt left-panel.
+   The gantt page already has :has(#lv1-schedule-section) { overflow:visible }
+   but taste-enhancements.css overrides with !important — counter it here. */
+.home-wrap:has(#lv1-schedule-section),
+.home-wrap:has(.lv1-gantt-wrapper),
+.home-wrap:has(#lv1-gantt) {
+  overflow: visible !important;
+  border-radius: 18px !important;
+}
+
+/* Also ensure the lv1-section and its wrapper don't clip */
+.lv1-section,
+.lv1-gantt-wrapper,
+#lv1-schedule-section {
+  overflow: visible !important;
+}
+.lv1-gantt-wrapper {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+/* ================================================================
+   SCROLL REVEAL BASE — applied by JS Intersection Observer
+================================================================ */
+.sr-init {
+  opacity: 0;
+  transform: translateY(var(--reveal-translate-y));
+  will-change: opacity, transform;
+  transition:
+    opacity    var(--anim-slow) var(--ease-out-expo),
+    transform  var(--anim-slow) var(--ease-out-expo);
+}
+.sr-init.sr-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variants */
+.sr-left.sr-init  { transform: translateX(calc(-1 * var(--reveal-translate-x))); }
+.sr-right.sr-init { transform: translateX(var(--reveal-translate-x)); }
+.sr-scale.sr-init { transform: scale(var(--reveal-scale)) translateY(8px); }
+.sr-left.sr-visible,
+.sr-right.sr-visible,
+.sr-scale.sr-visible { transform: translateX(0) translateY(0) scale(1); }
+
+/* Stagger delays — applied as data-delay attribute via JS */
+.sr-init[data-delay="1"] { transition-delay: 60ms; }
+.sr-init[data-delay="2"] { transition-delay: 120ms; }
+.sr-init[data-delay="3"] { transition-delay: 180ms; }
+.sr-init[data-delay="4"] { transition-delay: 240ms; }
+.sr-init[data-delay="5"] { transition-delay: 300ms; }
+.sr-init[data-delay="6"] { transition-delay: 360ms; }
+.sr-init[data-delay="7"] { transition-delay: 420ms; }
+.sr-init[data-delay="8"] { transition-delay: 480ms; }
+
+
+/* ================================================================
+   NAVBAR — sticky glass + progress bar
+================================================================ */
+.g-nav {
+  transition: background var(--anim-std) var(--ease-in-out),
+              box-shadow var(--anim-std) var(--ease-in-out) !important;
+}
+
+/* Scroll-progress bar */
+#scroll-progress-bar {
+  position: fixed;
+  top: 50px; /* below navbar */
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #24397A, #CAEEFB, #5B8FE8);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(202,238,251,0.6);
+}
+
+/* Nav link ripple effect */
+.g-nav__link {
+  overflow: hidden;
+  position: relative;
+}
+.g-nav__link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(202,238,251,0.18) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--anim-fast) var(--ease-in-out);
+  pointer-events: none;
+}
+.g-nav__link:hover::before { opacity: 1; }
+
+/* Nav link active indicator pulse */
+@keyframes navActivePulse {
+  0%, 100% { opacity: 0.7; width: 16px; }
+  50%       { opacity: 1;   width: 22px; }
+}
+.g-nav__link.active::after {
+  animation: navActivePulse 2.5s var(--ease-in-out) infinite !important;
+}
+
+
+/* ================================================================
+   HERO SECTION — layered parallax + typewriter underline
+================================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background grid / dot pattern */
+.hero::before {
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(202,238,251,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(91,143,232,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 0%, rgba(202,238,251,0.04) 0%, transparent 40%) !important;
+}
+
+/* Floating orbs */
+.hero-orb-1, .hero-orb-2 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero-orb-1 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(202,238,251,0.07), transparent 70%);
+  top: -60px; right: -60px;
+  animation: orbFloat1 12s ease-in-out infinite;
+}
+.hero-orb-2 {
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(91,143,232,0.08), transparent 70%);
+  bottom: -40px; left: 5%;
+  animation: orbFloat2 9s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-20px, 15px) scale(1.05); }
+  66%       { transform: translate(12px, -10px) scale(0.97); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(15px, -20px); }
+}
+
+/* Hero text animated underline */
+.hero-title span {
+  position: relative;
+  display: inline-block;
+}
+.hero-title span::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #CAEEFB, transparent);
+  border-radius: 2px;
+  animation: heroUnderline 1.2s var(--ease-out-expo) 0.6s forwards;
+}
+@keyframes heroUnderline {
+  to { width: 100%; }
+}
+
+/* Hero badge shimmer */
+.hero-badge {
+  position: relative;
+  overflow: hidden;
+}
+.hero-badge::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(202,238,251,0.3), transparent);
+  animation: heroBadgeShimmer 3s ease-in-out 1s infinite;
+}
+@keyframes heroBadgeShimmer {
+  0%   { left: -60%; }
+  100% { left: 130%; }
+}
+
+
+/* ================================================================
+   KEY FIGURES (kf-cards) — counter animation + lift
+================================================================ */
+.kf-card {
+  position: relative;
+  transition:
+    transform   var(--anim-std) var(--ease-spring),
+    box-shadow  var(--anim-std) var(--ease-spring),
+    border-color var(--anim-fast) !important;
+}
+.kf-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--shimmer-bg);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity var(--anim-std);
+  pointer-events: none;
+}
+.kf-card:hover::after {
+  opacity: 1;
+  animation: cardShimmer 1.2s var(--ease-in-out) forwards;
+}
+@keyframes cardShimmer {
+  from { background-position: -100% center; }
+  to   { background-position: 200% center; }
+}
+
+/* Number count-up — handled by JS, these are the base styles */
+.kf-value {
+  display: inline-block;
+  transition: color var(--anim-std);
+}
+.kf-card:hover .kf-value {
+  color: #24397A;
+  text-shadow: 0 0 20px rgba(36,57,122,0.15);
+}
+
+/* kf-bar animated width on scroll */
+.kf-bar {
+  width: 0 !important;
+  transition: width 1.2s var(--ease-out-expo) !important;
+}
+.kf-bar.animated { width: 40% !important; }
+.kf-card:hover .kf-bar { width: 65% !important; }
+
+
+/* ================================================================
+   SECTION LABELS — animated left-border grow
+================================================================ */
+.section-label {
+  position: relative;
+  padding-left: 14px !important;
+  overflow: hidden;
+}
+.section-label::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 4px;
+  height: 0%;
+  background: linear-gradient(180deg, #24397A, #CAEEFB);
+  border-radius: 2px;
+  transition: height 0.6s var(--ease-out-expo);
+}
+.section-label.sr-visible::before,
+.section-label:not(.sr-init)::before { height: 100%; }
+
+
+/* ================================================================
+   CARDS — universal elevation system
+================================================================ */
+/* Summary card */
+.summary-card {
+  transition:
+    box-shadow  var(--anim-std) var(--ease-in-out),
+    transform   var(--anim-std) var(--ease-spring),
+    border-image 0s !important;
+}
+.summary-card:hover {
+  transform: translateX(4px) !important;
+  box-shadow: 0 8px 28px rgba(36,57,122,0.13) !important;
+}
+
+/* Project info cards */
+.pinfo-card {
+  transition:
+    box-shadow  var(--anim-std) var(--ease-spring),
+    transform   var(--anim-std) var(--ease-spring) !important;
+}
+.pinfo-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow:
+    0 12px 32px rgba(36,57,122,0.14),
+    0 0 0 1px rgba(36,57,122,0.08) !important;
+}
+
+/* Info card */
+.info-card {
+  transition: box-shadow var(--anim-std) var(--ease-in-out) !important;
+}
+.info-card:hover {
+  box-shadow: 0 8px 24px rgba(36,57,122,0.12) !important;
+}
+
+/* Generic card shimmer on hover — exclude gantt children */
+[class*="card"]:not(.kf-card):not(.lv1-bar):not([class*="lv1"]) {
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ================================================================
+   TABLE — row reveal + hover glow
+================================================================ */
+tbody tr {
+  transition:
+    background var(--anim-fast) var(--ease-in-out),
+    box-shadow var(--anim-fast) !important;
+}
+tbody tr:hover {
+  background: rgba(36,57,122,0.035) !important;
+  box-shadow: inset 3px 0 0 rgba(36,57,122,0.4) !important;
+}
+thead tr {
+  position: relative;
+  overflow: hidden;
+}
+thead tr::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, rgba(202,238,251,0.3), rgba(202,238,251,0.05));
+}
+
+
+/* ================================================================
+   FLOW NODES
+================================================================ */
+.flow-node {
+  transition:
+    background     var(--anim-std) var(--ease-spring),
+    border-color   var(--anim-std) var(--ease-spring),
+    transform      var(--anim-std) var(--ease-spring),
+    box-shadow     var(--anim-std) !important;
+}
+.flow-node:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 4px 16px rgba(36,57,122,0.18) !important;
+}
+.flow-arr {
+  transition: opacity var(--anim-std), transform var(--anim-std) !important;
+}
+.flow-node:hover ~ .flow-arr {
+  transform: scaleX(1.15);
+}
+
+
+/* ================================================================
+   TEAM MEMBER CARDS — tilt + glow
+================================================================ */
+[class*="member"],
+[class*="team-card"] {
+  transition:
+    transform  var(--anim-std) var(--ease-spring),
+    box-shadow var(--anim-std) var(--ease-in-out) !important;
+  cursor: default;
+}
+[class*="member"]:hover,
+[class*="team-card"]:hover {
+  transform: translateY(-6px) !important;
+  box-shadow:
+    0 16px 40px rgba(36,57,122,0.16),
+    0 0 0 1px rgba(36,57,122,0.06) !important;
+}
+
+
+/* ================================================================
+   IMAGES — zoom reveal + lightbox hover
+================================================================ */
+[class*="img-grid"] img,
+[class*="image-grid"] img,
+[class*="photo"] img,
+[class*="gallery"] img {
+  transition:
+    transform   0.5s var(--ease-spring),
+    box-shadow  0.4s var(--ease-in-out),
+    filter      0.3s !important;
+  border-radius: 8px;
+  will-change: transform;
+}
+[class*="img-grid"] img:hover,
+[class*="image-grid"] img:hover,
+[class*="gallery"] img:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 16px 40px rgba(36,57,122,0.22) !important;
+  filter: brightness(1.04) saturate(1.08) !important;
+  z-index: 2;
+  position: relative;
+}
+
+/* Map outer */
+.map-outer {
+  transition:
+    box-shadow  var(--anim-std) var(--ease-in-out),
+    transform   var(--anim-std) var(--ease-spring) !important;
+}
+.map-outer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(36,57,122,0.18), 0 0 0 1px rgba(36,57,122,0.1) !important;
+}
+
+
+/* ================================================================
+   SCOPE ITEMS
+================================================================ */
+.scope-item {
+  transition:
+    background     var(--anim-fast) var(--ease-in-out),
+    padding-left   var(--anim-std) var(--ease-spring),
+    border-radius  var(--anim-fast) !important;
+}
+.scope-item:hover {
+  padding-left: 16px !important;
+  background: rgba(36,57,122,0.028) !important;
+  border-radius: 6px !important;
+}
+.scope-dot {
+  transition: transform var(--anim-std) var(--ease-bounce) !important;
+}
+.scope-item:hover .scope-dot {
+  transform: scale(1.5) !important;
+}
+
+
+/* ================================================================
+   PROGRESS / SCHEDULE BARS
+================================================================ */
+[class*="bar-fill"],
+[class*="progress-fill"],
+[class*="gantt-bar"],
+[class*="sch-bar"] {
+  transition: width 1.4s var(--ease-out-expo), filter 0.3s !important;
+  will-change: width;
+}
+[class*="bar-fill"]:hover,
+[class*="sch-bar"]:hover {
+  filter: brightness(1.12) !important;
+}
+
+/* Animated bar on scroll-reveal */
+.bar-animate-on-reveal {
+  width: 0 !important;
+}
+.bar-animate-on-reveal.animated {
+  width: var(--bar-target-width, 100%) !important;
+}
+
+
+/* ================================================================
+   BADGES & TAGS
+================================================================ */
+[class*="badge"],
+[class*="tag"],
+[class*="status-pill"] {
+  transition:
+    transform    var(--anim-fast) var(--ease-bounce),
+    box-shadow   var(--anim-fast),
+    background   var(--anim-fast) !important;
+}
+[class*="badge"]:hover {
+  transform: scale(1.08) translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(36,57,122,0.15) !important;
+}
+
+
+/* ================================================================
+   LINKS
+================================================================ */
+a:not(.g-nav__link) {
+  transition: color var(--anim-fast), opacity var(--anim-fast),
+              text-decoration-color var(--anim-fast) !important;
+  text-decoration-color: transparent;
+}
+a:not(.g-nav__link):hover {
+  text-decoration-color: currentColor;
+  opacity: 0.82;
+}
+
+
+/* ================================================================
+   DIVIDERS — animated gradient sweep
+================================================================ */
+hr.divider,
+.divider {
+  position: relative;
+  overflow: visible;
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(36,57,122,0.12) 20%,
+    rgba(202,238,251,0.3) 50%,
+    rgba(36,57,122,0.12) 80%,
+    transparent 100%
+  ) !important;
+  margin: 0 !important;
+}
+
+
+/* ================================================================
+   FOOTER
+================================================================ */
+.g-copyright {
+  background: linear-gradient(
+    135deg,
+    #0f1e48 0%,
+    #111b40 50%,
+    #1a2860 100%
+  ) !important;
+  position: relative;
+  overflow: hidden;
+}
+.g-copyright::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(202,238,251,0.2), transparent);
+}
+
+
+/* ================================================================
+   PAGE TRANSITION OVERLAY
+   Fades in when navigating to new page, fades out on load
+================================================================ */
+#page-fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: #eef2f8;
+  z-index: 99998;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-in-out);
+}
+#page-fade-overlay.fade-out {
+  opacity: 1;
+}
+
+
+
+/* ================================================================
+   TOOLTIP ON HOVER — for kf-cards, flow nodes etc.
+   EXCLUDE gantt bars (they use data-tip but need position:absolute)
+================================================================ */
+[data-tip]:not(.lv1-bar):not(.lv1-diamond):not([class*="lv1"]) {
+  position: relative;
+}
+[data-tip]:not(.lv1-bar):not(.lv1-diamond):not([class*="lv1"])::before {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(15,30,72,0.92);
+  color: rgba(202,238,251,0.9);
+  font-size: 10px;
+  font-family: Georgia, serif;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s var(--ease-spring);
+  z-index: 999;
+  border: 1px solid rgba(202,238,251,0.15);
+}
+[data-tip]:not(.lv1-bar):not(.lv1-diamond):not([class*="lv1"]):hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* ================================================================
+   STAGGER ANIMATION — for lists, tables rows, grid children
+================================================================ */
+@keyframes fadeSlideInRow {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.stagger-children > *:nth-child(1)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.05s both; }
+.stagger-children > *:nth-child(2)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.10s both; }
+.stagger-children > *:nth-child(3)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.15s both; }
+.stagger-children > *:nth-child(4)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.20s both; }
+.stagger-children > *:nth-child(5)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.25s both; }
+.stagger-children > *:nth-child(6)  { animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.30s both; }
+.stagger-children > *:nth-child(n+7){ animation: fadeSlideInRow 0.4s var(--ease-out-expo) 0.35s both; }
+
+
+/* ================================================================
+   PAGE LOAD — home-wrap entrance
+================================================================ */
+@keyframes pageEntranceUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.home-wrap {
+  animation: pageEntranceUp 0.55s var(--ease-out-expo) both !important;
+}
+.hero-badge { animation: pageEntranceUp 0.45s var(--ease-out-expo) 0.08s both !important; }
+.hero-title { animation: pageEntranceUp 0.45s var(--ease-out-expo) 0.16s both !important; }
+.hero-sub   { animation: pageEntranceUp 0.45s var(--ease-out-expo) 0.24s both !important; }
+.hero-line  { animation: pageEntranceUp 0.45s var(--ease-out-expo) 0.30s both !important; }
+
+
+/* ================================================================
+   TOPBAR BRAND ENTRANCE
+================================================================ */
+.topbar-title {
+  animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.1s both;
+}
+.logo-wrap {
+  animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.05s both;
+}
+
+
+/* ================================================================
+   SCROLLBAR ENHANCED
+================================================================ */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track {
+  background: rgba(36,57,122,0.03);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #24397A 0%, #5B8FE8 100%);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1a2860 0%, #24397A 100%);
+  background-clip: content-box;
+}
+
+
+/* ================================================================
+   SECTION — entrance on page
+================================================================ */
+.section:nth-child(1)  { animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.12s both; }
+.section:nth-child(2)  { animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.20s both; }
+.section:nth-child(3)  { animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.28s both; }
+.section:nth-child(4)  { animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.36s both; }
+.section:nth-child(n+5){ animation: pageEntranceUp 0.5s var(--ease-out-expo) 0.44s both; }
+
+
+/* ================================================================
+   FOCUS STYLES
+================================================================ */
+*:focus-visible {
+  outline: 2px solid rgba(202,238,251,0.7) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 0 4px rgba(36,57,122,0.12) !important;
+}
+
+
+/* ================================================================
+   PRINT — strip animations
+================================================================ */
+@media print {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+  #scroll-progress-bar,
+  #page-fade-overlay,
+  .hero-orb-1, .hero-orb-2 {
+    display: none !important;
+  }
+}
+
+
+/* ================================================================
+   PREFERS-REDUCED-MOTION — full override
+================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sr-init { opacity: 1 !important; transform: none !important; }
+  .kf-bar  { width: 40% !important; }
+  #scroll-progress-bar { display: none; }
+}
