@@ -1,0 +1,17 @@
+name = "ima-bot"
+main = "index.js"
+compatibility_date = "2024-12-01"
+
+# Sau khi deploy thành công, Worker sẽ có URL dạng:
+#   https://ima-bot.<YOUR-CF-SUBDOMAIN>.workers.dev
+#
+# Các secret cần set bằng lệnh (KHÔNG ghi key vào file này):
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put KB_URL
+#   npx wrangler secret put ALLOWED_ORIGIN
+#
+# KB_URL ví dụ:
+#   https://raw.githubusercontent.com/<USER>/<REPO>/main/ima-kb.md
+#
+# ALLOWED_ORIGIN ví dụ:
+#   https://<USER>.github.io
