@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>if(sessionStorage.getItem("ima_auth_v1")!=="1"){location.replace("index.html");};</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tender Brain — IMA Gas Field Brownfield Project</title>
+<style>
+*, body, p, div, span, td, th, li, h1, h2, h3, button, input, label {
+  font-family: 'Times New Roman', Times, serif !important;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #eef2f8; font-family: Georgia, 'Times New Roman', Times, serif; min-height: 100vh; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Navbar ── */
+.g-nav { position:sticky; top:0; z-index:1000; background:#24397A; padding:0 28px; height:50px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(202,238,251,0.15); box-shadow:0 2px 16px rgba(0,0,0,0.25); }
+.g-nav__left { display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.g-nav__logo { background:#fff; border-radius:5px; padding:2px 7px; display:flex; align-items:center; }
+.g-nav__logo img { height:28px; object-fit:contain; }
+.g-nav__brand { font-family:Georgia,serif; font-size:10.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(202,238,251,0.7); line-height:1.3; }
+.g-nav__brand span { display:block; font-size:8.5px; font-weight:400; letter-spacing:1px; font-style:italic; color:rgba(202,238,251,0.4); }
+.g-nav__links { display:flex; align-items:center; gap:1px; overflow-x:auto; scrollbar-width:none; }
+.g-nav__links::-webkit-scrollbar { display:none; }
+.g-nav__link { font-family:Georgia,serif; font-size:11px; font-weight:700; letter-spacing:0.3px; color:rgba(202,238,251,0.58); padding:5px 10px; border-radius:5px; white-space:nowrap; border:1px solid transparent; transition:all 0.15s; display:flex; align-items:center; gap:4px; }
+.g-nav__link:hover { background:rgba(202,238,251,0.1); color:#fff; }
+.g-nav__link.active { background:rgba(202,238,251,0.14); color:#CAEEFB; border-color:rgba(202,238,251,0.2); }
+.g-nav__num { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:rgba(202,238,251,0.1); font-size:8px; font-weight:700; color:rgba(202,238,251,0.5); flex-shrink:0; }
+.g-nav__link.active .g-nav__num { background:#CAEEFB; color:#24397A; }
+
+/* ── Page layout ── */
+body { padding:0 !important; }
+.page-outer { padding:24px; }
+.home-wrap { background:#fff; border-radius:16px; overflow:hidden; max-width:1200px; margin:0 auto; box-shadow:0 6px 40px rgba(36,57,122,0.13); border:1px solid #d0d8ee; }
+
+/* ── Topbar ── */
+.topbar { background:#24397A; padding:11px 28px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-title { font-family:Georgia,serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(202,238,251,0.82); }
+.logo-wrap { background:#fff; border-radius:6px; padding:4px 10px; }
+.logo-wrap img { height:42px; object-fit:contain; display:block; }
+
+/* ── Hero ── */
+.hero { background:linear-gradient(135deg,#24397A 0%,#1a2d66 55%,#0f1e48 100%); padding:32px 36px 26px; position:relative; overflow:hidden; }
+.hero::after { content:''; position:absolute; right:-50px; top:-50px; width:260px; height:260px; border-radius:50%; background:rgba(202,238,251,0.05); pointer-events:none; }
+.hero-badge { display:inline-flex; align-items:center; min-height:36px; font-family:'Times New Roman',Times,serif; font-size:17px; font-weight:700; letter-spacing:4.2px; text-transform:uppercase; color:#fff; background:linear-gradient(90deg,rgba(202,238,251,0.26),rgba(202,238,251,0.12)); border:1px solid rgba(202,238,251,0.72); border-left:6px solid #CAEEFB; padding:8px 24px 8px 18px; border-radius:5px; margin-bottom:18px; box-shadow:0 10px 24px rgba(0,0,0,0.16); }
+.hero-title { font-family:Georgia,serif; font-size:34px; font-weight:700; line-height:1.15; color:#fff; margin-bottom:6px; }
+.hero-title span { color:#CAEEFB; }
+.hero-sub { font-family:Georgia,serif; font-size:14px; font-style:italic; color:rgba(202,238,251,0.6); line-height:1.6; }
+.hero-line { width:56px; height:3px; background:#CAEEFB; border-radius:2px; margin:16px 0 0; opacity:0.45; }
+
+/* ── Section wrapper ── */
+.section { padding:1.4rem 2.2rem; }
+.section-label { display:inline-flex; align-items:center; min-height:30px; font-family:'Times New Roman',Times,serif; font-size:14px; font-weight:700; letter-spacing:3.2px; text-transform:uppercase; color:#24397A; background:#f3f7fd; border:1px solid #dce6f5; border-left:5px solid #24397A; border-radius:4px; margin-bottom:1.1rem; padding:7px 18px 7px 14px; box-shadow:0 5px 14px rgba(36,57,122,0.06); }
+.divider { border:none; border-top:1px solid #e4e9f4; }
+
+/* ── Footer ── */
+.footer { background:#f6f9ff; padding:13px 28px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid #dce6f5; }
+.footer-text { font-family:Georgia,serif; font-size:11px; font-style:italic; color:#24397A; }
+.footer-logo { background:#fff; border-radius:6px; padding:3px 8px; border:1px solid #dce6f5; }
+.footer-logo img { height:32px; object-fit:contain; display:block; }
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 08 — NEURAL BRAIN / KNOWLEDGE GRAPH
+═══════════════════════════════════════════════════════════ */
+
+/* Search area */
+.tb-search-area { padding:1.2rem 2.2rem 0.8rem; background:#f8faff; border-bottom:1px solid #dce6f5; }
+.tb-search-row { display:flex; gap:10px; align-items:center; }
+.tb-search-wrap { position:relative; flex:1; }
+.tb-search-input { width:100%; height:48px; padding:0 20px 0 46px; font-family:'Times New Roman',Times,serif !important; font-size:14px; color:#1a2a5a; background:#fff; border:2px solid #c8d6ee; border-radius:10px; outline:none; transition:border-color 0.2s,box-shadow 0.2s; box-shadow:0 2px 8px rgba(36,57,122,0.06); }
+.tb-search-input:focus { border-color:#24397A; box-shadow:0 0 0 3px rgba(36,57,122,0.1); }
+.tb-search-input::placeholder { color:#a0adc8; font-style:italic; }
+.tb-search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; height:18px; opacity:0.38; pointer-events:none; }
+.tb-clear-btn { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:4px; border-radius:4px; opacity:0.45; display:none; }
+.tb-clear-btn:hover { opacity:1; }
+.tb-reset-btn { height:48px; padding:0 18px; border-radius:10px; border:2px solid #c8d6ee; background:#fff; color:#24397A; font-family:'Times New Roman',Times,serif !important; font-size:12px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; cursor:pointer; box-shadow:0 2px 8px rgba(36,57,122,0.06); transition:background 0.15s,border-color 0.15s,box-shadow 0.15s; white-space:nowrap; }
+.tb-reset-btn:hover { background:#f0f4fc; border-color:#24397A; box-shadow:0 2px 10px rgba(36,57,122,0.12); }
+
+/* Filter chips */
+.tb-chips { display:flex; flex-wrap:wrap; gap:7px; margin-top:0.8rem; }
+.tb-chip { font-family:'Times New Roman',Times,serif; font-size:11.5px; font-weight:700; letter-spacing:0.3px; padding:5px 14px; border-radius:20px; border:1.5px solid #c8d6ee; background:#fff; color:#4a5a8a; cursor:pointer; transition:all 0.15s; user-select:none; }
+.tb-chip:hover { border-color:#24397A; color:#24397A; background:#f0f4fc; }
+.tb-chip.active { background:#24397A; color:#fff; border-color:#24397A; box-shadow:0 2px 8px rgba(36,57,122,0.22); }
+
+/* Main layout */
+.tb-main { display:flex; gap:0; }
+.tb-left { flex:0 0 320px; border-right:1px solid #dce6f5; display:flex; flex-direction:column; height:560px; }
+.tb-right { flex:1; min-width:0; display:flex; flex-direction:column; }
+
+/* Results panel */
+.tb-results-header { padding:10px 18px 8px; border-bottom:1px solid #f0f4fc; display:flex; align-items:center; justify-content:space-between; background:#fafcff; }
+.tb-results-title { font-family:'Times New Roman',Times,serif; font-size:11.5px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#6a7aa8; }
+.tb-results-count { font-size:11px; color:#a0adc8; font-style:italic; }
+.tb-results-list { flex:1; overflow-y:auto; padding:8px; }
+.tb-results-list::-webkit-scrollbar { width:5px; }
+.tb-results-list::-webkit-scrollbar-track { background:#f0f4fc; }
+.tb-results-list::-webkit-scrollbar-thumb { background:#c8d6ee; border-radius:3px; }
+
+/* Result card */
+.tb-card { padding:11px 14px; border-radius:8px; border:1.5px solid transparent; cursor:pointer; transition:all 0.15s; margin-bottom:6px; background:#fff; }
+.tb-card:hover { border-color:#c8d6ee; background:#f6f9ff; }
+.tb-card.active { border-color:#24397A; background:#f0f5ff; box-shadow:0 2px 10px rgba(36,57,122,0.1); }
+.tb-card-top { display:flex; align-items:flex-start; gap:8px; margin-bottom:6px; }
+.tb-card-title { font-size:13px; font-weight:700; color:#1a2a5a; line-height:1.3; flex:1; }
+.tb-badge { display:inline-flex; align-items:center; font-size:9.5px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase; padding:2px 7px; border-radius:4px; white-space:nowrap; flex-shrink:0; }
+.tb-badge-contract  { background:#dde8ff; color:#24397A; }
+.tb-badge-exhibit   { background:#e2f2e8; color:#2a7a4a; }
+.tb-badge-wp        { background:#fff0d6; color:#7a5000; }
+.tb-badge-technical { background:#e6d8ff; color:#4a0a8a; }
+.tb-badge-bulletin  { background:#ffe0e0; color:#8a1a1a; }
+.tb-badge-clarification { background:#ffecd6; color:#7a3a00; }
+.tb-badge-nigerian  { background:#d6f0e8; color:#1a5a3a; }
+.tb-badge-services  { background:#d6e8ff; color:#1a3a6a; }
+.tb-badge-hse       { background:#fdd6d6; color:#7a0a0a; }
+.tb-badge-logistics { background:#e0e0ff; color:#2a2a7a; }
+.tb-badge-topic     { background:#eef2fa; color:#4a5a8a; }
+.tb-card-desc { font-size:11.5px; color:#5a6a8a; line-height:1.5; margin-bottom:6px; }
+.tb-card-meta { display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
+.tb-meta-tag { font-size:10px; color:#7a8ab0; background:#f0f4fc; border-radius:3px; padding:1px 6px; }
+.tb-meta-path { font-size:10px; color:#a0adc8; font-style:italic; }
+.tb-meta-wp { font-size:10px; font-weight:700; color:#7a5000; background:#fff0d6; border-radius:3px; padding:1px 6px; }
+
+/* Empty state */
+.tb-empty { padding:32px 20px; text-align:center; }
+.tb-empty-icon { font-size:32px; margin-bottom:12px; opacity:0.4; }
+.tb-empty-title { font-size:13px; font-weight:700; color:#4a5a8a; margin-bottom:8px; }
+.tb-empty-hint { font-size:11.5px; color:#8a9ab8; line-height:1.6; font-style:italic; }
+.tb-empty-hints { margin-top:12px; display:flex; flex-wrap:wrap; gap:5px; justify-content:center; }
+.tb-empty-kw { font-size:10.5px; padding:3px 10px; border-radius:12px; border:1px solid #c8d6ee; background:#f4f7fd; color:#5a6a9a; cursor:pointer; transition:all 0.12s; }
+.tb-empty-kw:hover { background:#24397A; color:#fff; border-color:#24397A; }
+
+/* Canvas area */
+.tb-canvas-wrap { position:relative; width:100%; height:580px; background:#252b37; overflow:hidden; }
+#brain-cv { display:block; width:100%; height:100%; }
+
+/* Tooltip */
+.tb-tooltip { position:absolute; pointer-events:none; background:rgba(10,20,50,0.92); border:1px solid rgba(91,212,255,0.3); border-radius:8px; padding:10px 14px; max-width:220px; z-index:20; display:none; backdrop-filter:blur(8px); }
+.tb-tooltip-title { font-size:12px; font-weight:700; color:#c8ecff; margin-bottom:4px; }
+.tb-tooltip-desc { font-size:11px; color:rgba(200,236,255,0.65); line-height:1.5; }
+.tb-tooltip-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+.tb-tooltip-tag { font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(91,212,255,0.12); color:rgba(91,212,255,0.75); border:1px solid rgba(91,212,255,0.18); }
+
+/* Detail panel */
+.tb-detail { display:none; border-top:1px solid #dce6f5; padding:18px 22px; background:#f6f9ff; }
+.tb-detail.open { display:block; }
+.tb-detail-inner { max-width:800px; }
+.tb-detail-top { display:flex; align-items:flex-start; gap:14px; margin-bottom:12px; }
+.tb-detail-icon { width:44px; height:44px; border-radius:10px; background:#e8eeff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.tb-detail-info { flex:1; }
+.tb-detail-title { font-size:16px; font-weight:700; color:#1a2a5a; margin-bottom:4px; }
+.tb-detail-badges { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px; }
+.tb-detail-desc { font-size:13px; color:#4a5a7a; line-height:1.65; }
+.tb-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.tb-detail-field { background:#fff; border:1px solid #dce6f5; border-radius:6px; padding:10px 13px; }
+.tb-detail-field-label { font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#8a9ab8; margin-bottom:4px; }
+.tb-detail-field-value { font-size:12.5px; color:#1a2a5a; line-height:1.5; }
+.tb-detail-related { margin-top:14px; }
+.tb-detail-related-label { font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#8a9ab8; margin-bottom:8px; }
+.tb-detail-related-nodes { display:flex; flex-wrap:wrap; gap:7px; }
+.tb-rel-btn { font-size:11px; font-weight:700; padding:5px 12px; border-radius:6px; border:1.5px solid #c8d6ee; background:#fff; color:#4a5a8a; cursor:pointer; transition:all 0.15s; }
+.tb-rel-btn:hover { border-color:#24397A; color:#24397A; background:#f0f4fc; }
+.tb-detail-action { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:9px 18px; background:#24397A; color:#fff; border-radius:7px; font-size:12px; font-weight:700; letter-spacing:0.4px; border:none; cursor:pointer; transition:background 0.15s; }
+.tb-detail-action:hover { background:#1a2d66; }
+
+/* Orbit legend */
+.tb-legend { position:absolute; top:14px; left:14px; z-index:10; display:flex; flex-direction:column; gap:6px; min-width:150px; padding:11px 13px 12px; background:rgba(16,24,36,0.66); border:1px solid rgba(202,238,251,0.13); border-radius:8px; box-shadow:0 12px 32px rgba(0,0,0,0.28); backdrop-filter:blur(8px); }
+.tb-legend::before { content:'Graph legend'; font-size:9px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:rgba(202,238,251,0.42); margin-bottom:2px; }
+.tb-legend-item { display:flex; align-items:center; gap:8px; font-size:10.5px; line-height:1.2; color:rgba(226,240,255,0.72); }
+.tb-legend-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+@media(max-width:820px){
+  .tb-main { flex-direction:column; }
+  .tb-left { flex:none; min-height:280px; border-right:none; border-bottom:1px solid #dce6f5; }
+  .tb-canvas-wrap { height:380px; }
+  .tb-detail-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navbar ── -->
+<nav class="g-nav">
+  <div class="g-nav__left">
+    <div class="g-nav__logo"><img src="data:image/png;base64,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" alt="PTSC"/></div>
+    <div class="g-nav__brand">IMA Gas Field Development<span>BNAG Brownfield Modification &amp; Integration Works</span></div>
+  </div>
+  <div class="g-nav__links">
+    <a href="01. Overview.html" class="g-nav__link"><span class="g-nav__num">01</span>Overview</a>
+    <a href="02. Contract Strategies.html" class="g-nav__link"><span class="g-nav__num">02</span>Contract Strategies</a>
+    <a href="03. Scope of Work.html" class="g-nav__link"><span class="g-nav__num">03</span>Scope of Work</a>
+    <a href="04. Project Execution Plan.html" class="g-nav__link"><span class="g-nav__num">04</span>Execution Plan</a>
+    <a href="05. Manhours &amp; Schedule.html" class="g-nav__link"><span class="g-nav__num">05</span>Manhours &amp; Schedule</a>
+    <a href="06. IMA Brownfield Project Team.html" class="g-nav__link"><span class="g-nav__num">06</span>Project Team</a>
+    <a href="07. Images &amp; Documents.html" class="g-nav__link"><span class="g-nav__num">07</span>Images &amp; Documents</a>
+    <a href="08. Tender Brain Search.html" class="g-nav__link active"><span class="g-nav__num">08</span>Tender Brain</a>
+  </div>
+</nav>
+
+<div class="page-outer">
+<div class="home-wrap">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-title">IMA Gas Field Development Project &nbsp;&mdash;&nbsp; BNAG Brownfield Works</div>
+    <div class="logo-wrap"><img src="data:image/png;base64,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" alt="PTSC"/></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">08 — TENDER BRAIN</div>
+    <div class="hero-title">Neural <span>Knowledge Map</span></div>
+    <div class="hero-sub">Interactive document brain — explore every tender artifact, work package, and topic<br>through a live orbital graph. Click any node or search below.</div>
+    <div class="hero-line"></div>
+  </div>
+
+  <!-- Search area -->
+  <div class="tb-search-area">
+    <div class="tb-search-row">
+      <div class="tb-search-wrap">
+        <svg class="tb-search-icon" viewBox="0 0 20 20" fill="none" stroke="#24397A" stroke-width="2">
+          <circle cx="9" cy="9" r="6"/><line x1="14" y1="14" x2="18" y2="18"/>
+        </svg>
+        <input id="tbSearch" class="tb-search-input" type="text"
+          placeholder="Search documents, work packages, topics… e.g. TCC, WP3, Nigerian Content"/>
+        <button class="tb-clear-btn" id="tbClear" title="Clear">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="#6a7aa8"><line x1="2" y1="2" x2="12" y2="12" stroke="#6a7aa8" stroke-width="2"/><line x1="12" y1="2" x2="2" y2="12" stroke="#6a7aa8" stroke-width="2"/></svg>
+        </button>
+      </div>
+      <button class="tb-reset-btn" id="tbReset" type="button" title="Reset search, filter and selection">Reset</button>
+    </div>
+    <div class="tb-chips" id="tbChips">
+      <div class="tb-chip active" data-filter="all">All</div>
+      <div class="tb-chip" data-filter="contract">Contract</div>
+      <div class="tb-chip" data-filter="exhibit">Exhibit</div>
+      <div class="tb-chip" data-filter="wp">Work Package</div>
+      <div class="tb-chip" data-filter="technical">Technical</div>
+      <div class="tb-chip" data-filter="bulletin">Tender Bulletin</div>
+      <div class="tb-chip" data-filter="clarification">Clarification</div>
+      <div class="tb-chip" data-filter="nigerian">Nigerian Content</div>
+      <div class="tb-chip" data-filter="services">Services to Company</div>
+      <div class="tb-chip" data-filter="hse">HSE / QA</div>
+      <div class="tb-chip" data-filter="logistics">Logistics</div>
+    </div>
+  </div>
+
+  <!-- Main body -->
+  <div class="tb-main">
+
+    <!-- Left: results -->
+    <div class="tb-left">
+      <div class="tb-results-header">
+        <div class="tb-results-title">Results</div>
+        <div class="tb-results-count" id="tbCount">51 nodes</div>
+      </div>
+      <div class="tb-results-list" id="tbResults"></div>
+    </div>
+
+    <!-- Right: canvas + detail panel -->
+    <div class="tb-right">
+      <div class="tb-canvas-wrap" id="tbCanvasWrap">
+        <canvas id="brain-cv"></canvas>
+        <div class="tb-tooltip" id="tbTip"></div>
+        <!-- Orbit legend -->
+        <div class="tb-legend">
+          <div class="tb-legend-item"><div class="tb-legend-dot" style="background:#7dd6f0;box-shadow:0 0 10px rgba(125,214,240,0.65)"></div>Core node</div>
+          <div class="tb-legend-item"><div class="tb-legend-dot" style="background:#f0c040;box-shadow:0 0 10px rgba(240,192,64,0.58)"></div>Hub node</div>
+          <div class="tb-legend-item"><div class="tb-legend-dot" style="background:#4aabcc;box-shadow:0 0 8px rgba(74,171,204,0.46)"></div>Mid node</div>
+          <div class="tb-legend-item"><div class="tb-legend-dot" style="background:#2e8090"></div>Leaf node</div>
+        </div>
+      </div>
+      <!-- Detail panel lives inside right column — no page scroll -->
+      <div class="tb-detail" id="tbDetail">
+        <div class="tb-detail-inner" id="tbDetailInner"></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">IMA Gas Field Brownfield Project — CFT IMA-IFD-00004 — TotalEnergies EP Nigeria</div>
+    <div class="footer-logo"><img src="data:image/png;base64,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" alt="PTSC"/></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     BRAIN LOGIC
+════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Node type styles ── */
+const NSTYLE = {
+  center:        { fill:'#c8ecff', glow:'91,212,255',   txt:'#07111f', r:26 },
+  contract:      { fill:'#4a80e0', glow:'74,128,224',   txt:'#fff',    r:14 },
+  exhibit:       { fill:'#2e78b0', glow:'46,120,176',   txt:'#fff',    r:13 },
+  wp:            { fill:'#3aaf6f', glow:'58,175,111',   txt:'#fff',    r:11 },
+  technical:     { fill:'#8a5ad0', glow:'138,90,208',   txt:'#fff',    r:11 },
+  bulletin:      { fill:'#d04a4a', glow:'208,74,74',    txt:'#fff',    r:11 },
+  clarification: { fill:'#d07840', glow:'208,120,64',   txt:'#fff',    r:10 },
+  nigerian:      { fill:'#2a9060', glow:'42,144,96',    txt:'#fff',    r:10 },
+  services:      { fill:'#3060b0', glow:'48,96,176',    txt:'#fff',    r:10 },
+  hse:           { fill:'#b03030', glow:'176,48,48',    txt:'#fff',    r:10 },
+  logistics:     { fill:'#5050a0', glow:'80,80,160',    txt:'#fff',    r:10 },
+  topic:         { fill:'#4a6080', glow:'74,96,128',    txt:'#cde',    r:9  }
+};
+
+/* -- Searchable tender brain data -- */
+const ALIASES = ['DE Detailed Engineering','MC Mechanical Completion','CSU Commissioning and Start-Up','TCC Temporary Construction Camp','FOC Fibre Optic Cable','PFP Passive Fire Protection','CCM Contract Coordination Manual','MDR Master Document Register','MIEC Maintenance and Inspection Engineering Contractor','PTW Permit To Work','SIMOPS Simultaneous Operations','COMOPS Combined Operations','AFC Approved For Construction','AOC Achievement Of Commissioning','RFC Ready For Commissioning','RFSU Ready For Start-Up','LD Liquidated Damages','CPI COMPANY Provided Items','AVL Approved Vendor List','GSF Government Security Forces','PSC Private Security Contractor','ERP Emergency Response Plan','FAT Factory Acceptance Test','SAT Site Acceptance Test'];
+function node(id,label,type,title,desc,tags,path,ref,action){
+  return { id, label, type, title, desc, tags:[...tags, ...ALIASES], documentPath:path, reference:ref, action };
+}
+
+const RING0 = [
+  node('ctr','IMA\nTender\nBrain','center','IMA Brownfield Tender Brain','Central searchable brain for all COMPANY tender documents, contract exhibits, attachments, tender bulletins, FEED dossier, P&IDs, MTOs, clarification records, technical qualifications, work package references, engineering deliverables, logistics constraints and execution philosophies for CFT No. IMA-IFD-00004. The graph acts as an EPC brownfield contract relationship explorer for EPSCC modification and integration works at BNAG, BOGT and Bonny Island.', ['IMA','tender brain','contract brain','TotalEnergies','brownfield','EPSCC','BNAG','BOGT','Bonny','Nigeria','IMA-IFD-00004'], 'Root / IMA Gas Field Development Project / Tender Brain', 'CFT No. IMA-IFD-00004', 'Search the complete tender document graph')
+];
+
+const RING1 = [
+  node('itt','ITT','contract','ITT - Instructions to Tenderers','Tender process document covering Ariba submission, technical proposal, commercial proposal, clarification process, validity period, evaluation criteria, bidder obligations, communication rules, confidentiality, submission format, proposal deliverables, exceptions, commercial qualifications, bid closing date, tender schedule and post-bid clarifications. Tender Bulletin TB-001 revises the closing date from 13 April 2026 to 6 April 2026 at 14:00 CEST in Ariba. Tender Bulletin TB-009 adds the Economic Sanctions and Export Control Questionnaire to Volume 1 - Unpriced Contractual and Non-Commercial Proposal, Section 2, Business Ethics.', ['ITT','tender instruction','submission','Ariba','clarification','bidder','proposal','commercial','technical','evaluation','confidentiality','TB-001','IMA-IFD-0004-TBU-000001','closing date','6 April 2026','14:00 CEST','TB-009','IMA-IFD-0004-TBU-000009','Economic Sanctions','Export Control','Business Ethics','Volume 1'], 'Tender Package / ITT', 'IMA-IFD-00004-ITT', 'Review submission deadline, Ariba rules, sanctions/export control questionnaire and clarification obligations'),
+  node('agreement','Agreement','contract','Agreement','Main EPSCC contract agreement defining Contractor obligations, COMPANY obligations, contractual liabilities, completion requirements, provisional acceptance, final acceptance, warranty, latent defects, LDs, performance guarantees, insurance, indemnities, payment terms, variations, claims, disputes, suspension, termination, spare parts, construction obligations and inspection/testing obligations.', ['agreement','contract','liability','warranty','LD','claims','variation','acceptance','dispute','insurance','indemnity','termination','payment terms'], 'Tender Package / Agreement', 'IMA-IFD-00004-AGR', 'Review contractual obligations and acceptance logic'),
+  node('ex-a','Exhibit A','exhibit','Exhibit A - Scope of Work and Services to COMPANY','Primary scope exhibit for overall project scope, brownfield integration philosophy, battery limits, tie-in philosophy, shutdown philosophy, SIMOPS, live plant execution, scope split, EPC/CSU relationships, onshore/offshore interfaces, WP/WU hierarchy, services to COMPANY, technical reviews, AFC, as-built, HAZOP/HAZID/SIL reviews, Contractor responsibilities, worksite/workshop philosophy and commissioning interfaces.', ['scope of work','services to COMPANY','battery limit','brownfield','tie-in','shutdown','SIMOPS','AFC','as-built','HAZOP','WP','WU','live plant'], 'Tender Package / Exhibit A', 'IMA-IFD-00004-EXA', 'Explore official WP1-WP12 and brownfield interfaces'),
+  node('ex-b','Exhibit B','exhibit','Exhibit B - Schedule of Prices','Pricing exhibit covering lump sum philosophy, provisional sums, reimbursables, personnel rates, equipment rates, variation rates, milestone payments, HSE incentive, commercial breakdown, WP/WU pricing, invoicing, payment certification, compensation events, additional/reduced facilities and pricing assumptions.', ['pricing','lump sum','provisional sum','reimbursable','rates','milestone','invoice','variation','HSE incentive','payment certification'], 'Tender Package / Exhibit B', 'IMA-IFD-00004-EXB', 'Search pricing, payment and compensation relationships'),
+  node('ex-c','Exhibit C','exhibit','Exhibit C - Work Schedule','Planning exhibit covering Level 1/2/3 schedules, baseline, revisions, float, critical path, weighted progress, manpower histogram, productivity, shutdown milestones, interface milestones, procurement, engineering, commissioning milestones, physical progress logic, WBS, reporting cycle and manpower definition. Tender Bulletin TB-002 identifies TEG Unit, Mercury Removal Unit (MRU) and Gas Fiscal Metering Unit (GMU) as long-lead contractor items that may jeopardise the WORK SCHEDULE if not supplied on time. TB-010 instructs Tenderers to confirm lead time from PO issuance to Ex-Works delivery for TEG, MRU and GMU no later than the 6 April 2026 closing date.', ['schedule','baseline','critical path','float','histogram','milestone','WBS','progress','manpower','planning','shutdown schedule','TB-002','TB-010','LLI','long lead item','TEG Unit','MRU','Mercury Removal Unit','GMU','Gas Fiscal Metering Unit','lead time','Ex-Works','PO issuance'], 'Tender Package / Exhibit C', 'IMA-IFD-00004-EXC', 'Trace schedule, milestones, LLI lead times and progress measurement'),
+  node('ex-d','Exhibit D','exhibit','Exhibit D - Performance Guarantees','Performance exhibit covering process guarantees, availability, reliability, performance test acceptance, remedial action, retest, commissioning completion, acceptance certificate logic, guarantee liabilities, operating condition assumptions and validation.', ['performance guarantee','availability','reliability','performance test','acceptance','guarantee','retest','operating conditions'], 'Tender Package / Exhibit D', 'IMA-IFD-00004-EXD', 'Review guarantee and test acceptance logic'),
+  node('ex-e','Exhibit E','exhibit','Exhibit E - Technical Specifications and Design Dossier','Technical dossier consolidating COMPANY General Specifications, GS references, FEED, P&IDs, MTOs, datasheets, layouts, design basis, design criteria, vendor document requirements, discipline deliverables, HVAC, geotechnical/geophysical survey references, corrosion/material selection, preservation, FAT/SAT/testing, material handling, calculations and technical review requirements. Tender Bulletins TB-004, TB-006 and TB-007 supplement or replace Exhibit E content: NG-IMA-00-TOTA-000025 Rev.00 BNAG FEED Punch List; revised Attachment E.1 rev1; revised Instrumentation Technical Room Layout NG-IMA-10-DORS-479103; HV Switchgear Relay Schematic NG-IMA-10-DORS-499031; Piping Support List NG-IMA-10-DORS-421163; BNAG Instrument I/O Summary Rev.02; Instrument List Rev.03; GS-EP-PVV-145 flanges; GS-EP-PVV-146 bolting; GS-EP-PVV-813 skid mounted units; WHP Electrical Specification for Package Units NG-IMA-41-DORS-491012.', ['FEED','GS','P&ID','MTO','datasheet','design basis','design criteria','FAT','SAT','technical specification','vendor documents','corrosion','preservation','TB-004','TB-006','TB-007','Attachment E.1 rev1','NG-IMA-00-TOTA-000025','BNAG FEED Punch List','NG-IMA-10-DORS-479103','NG-IMA-10-DORS-499031','NG-IMA-10-DORS-421163','NG-IMA-11-DORS-471021','NG-IMA-11-DORS-471020','GS-EP-PVV-145','GS-EP-PVV-146','GS-EP-PVV-813','NG-IMA-41-DORS-491012'], 'Tender Package / Exhibit E', 'IMA-IFD-00004-EXE', 'Navigate specifications, FEED punch list, revised Attachment E.1, drawings and MTOs'),
+  node('ex-f','Exhibit F','exhibit','Exhibit F - Particular Conditions for Performance of the Work','Execution conditions for worksites, workshops, logistics base, marine spread, transportation philosophy, weather criteria, Bonny Island constraints, construction equipment, lifting constraints, transportation limits, storage, loadout, offloading, personnel transportation, marine operations, quayside limits and worksite/workshop declarations.', ['worksite','workshop','logistics','marine spread','lifting','transportation','loadout','offloading','Bonny Island','quayside','weather'], 'Tender Package / Exhibit F', 'IMA-IFD-00004-EXF', 'Search logistics, worksite and marine constraints'),
+  node('ex-g','Exhibit G','exhibit','Exhibit G - Coordination Procedure / CCM','Contract Coordination Manual covering reporting hierarchy, governance, communication matrix, approval workflow, planning/reporting cycle, document control, interface management, procurement/construction/commissioning coordination, progress measurement, manhours, WBS, schedule revision, cost control, meetings, technical review, document numbering and reporting deliverables.', ['CCM','reporting','governance','document control','interface','WBS','manhours','communication matrix','approval workflow','cost control'], 'Tender Package / Exhibit G', 'IMA-IFD-00004-EXG', 'Explore coordination, governance and document control'),
+  node('ex-h','Exhibit H','exhibit','Exhibit H - QA/QC','Quality exhibit covering Project Quality Plan, ITP, vendor surveillance, inspection release, welding records, NDT, dimensional control, material traceability, preservation records, FAT/SAT inspection, quality dossier, MC dossier, turnover dossier, NCR, punch management, TPCA inspection, certification and testing philosophy.', ['QAQC','ITP','NDT','FAT','SAT','traceability','NCR','punch','TPCA','quality dossier','MC dossier'], 'Tender Package / Exhibit H', 'IMA-IFD-00004-EXH', 'Search inspection, testing and dossier requirements'),
+  node('ex-i','Exhibit I','exhibit','Exhibit I - COMPANY Provided Items and Early Contracts','Interface exhibit for COMPANY provided equipment, COMPANY services, free issue materials, interface contractors, early contracts, CSP, SURF, pipeline, drilling, telecom, power, ICSS, delivery responsibilities, battery limits, risk areas and interface management philosophy.', ['CPI','free issue','interface','CSP','SURF','pipeline','drilling','ICSS','telecom','power','early contracts'], 'Tender Package / Exhibit I', 'IMA-IFD-00004-EXI', 'Trace CPI and early contract interfaces'),
+  node('ex-j','Exhibit J','exhibit','Exhibit J - Approved Vendors / Spare Parts / Tools','Vendor support exhibit covering AVL philosophy, vendor qualification, spare categories, commissioning spares, start-up consumables, capital spares, preservation tools, maintenance tools, OEM/vendor support, FAT attendance, specialist subcontractors, laboratories, NDT contractors, weather providers, inspection agencies, certifying authority and TPCA. Tender Bulletin TB-008 replaces 122 IMA Brownfield EXHIBIT J, Attachment J1 with Attachment J1 rev1 for approved subcontractors and vendors. TB-002 and TB-010 also identify prospective vendor engagement for TEG Package, MRU Package and Gas Fiscal Metering Unit.', ['AVL','OEM','spare parts','commissioning spares','FAT','vendor qualification','special tools','NDT contractors','certifying authority','TB-008','IMA-IFD-0004-TBU-000008','Attachment J1 rev1','Approved Subcontractors and Vendors','TEG Package','MRU package','Gas Fiscal Metering skid','Liquid metering skid','Emerson','Endress Hauser','Krohne','ODS Metering','Axens','Enerflex','NOV','Schlumberger','SLB','Lanpec','Himile','REPCo','Honeywell UOP','CECO'], 'Tender Package / Exhibit J', 'IMA-IFD-00004-EXJ', 'Search vendors, spares, tools and Attachment J1 rev1'),
+  node('ex-k','Exhibit K','exhibit','Exhibit K - Contractor Organisation and Key Personnel','Organisation exhibit covering project organization philosophy, PMT, engineering, procurement, construction, commissioning, interface, HSE, QAQC, security, camp operation, reporting relationships, minimum experience, CV approval and manpower mobilization.', ['PMT','organization','key personnel','mobilization','engineering manager','project manager','CV approval','manpower'], 'Tender Package / Exhibit K', 'IMA-IFD-00004-EXK', 'Review PMT and key personnel requirements'),
+  node('ex-l','Exhibit L','hse','Exhibit L - HSE / Security / Community / Environment','HSE/security/community exhibit covering HSE Management System, Bridging Document, PTW, SIMOPS/COMOPS, ERP, medevac, oil spill, security risk assessment, GSF/PSC, community, environment, waste, chemicals, lifting, marine, driving, work at height, confined space, electrical safety, dropped objects, audits, incident reporting, life saving rules, HSE incentive and competency/training.', ['HSE','PTW','SIMOPS','COMOPS','medevac','GSF','PSC','community','ERP','environment','lifting','marine','life saving rules'], 'Tender Package / Exhibit L', 'IMA-IFD-00004-EXL', 'Explore HSE, PTW, security and community requirements'),
+  node('ex-m','Exhibit M','nigerian','Exhibit M - Nigerian Content','Nigerian Content exhibit covering NOGICD requirements, Nigerian manpower targets, local fabrication, local construction, local commissioning, training, technology transfer, human capital development, Nigerian subcontractors, reporting, local procurement, vendor participation, community workforce and local capacity development. Tender Bulletin TB-003 adds Corporate, Tax Compliance and NUPRC requirements: contracting structures may be unregistered JV/consortium, registered JV/SPV, or subcontracting arrangement; MoA and unpriced subcontracts may be required; Section 78 CAMA incorporation, NUPRC permits, CAC incorporation and TIN/Tax ID obligations are clarified and an undertaking must be signed.', ['Nigerian Content','NOGICD','NCDMB','local manpower','local fabrication','training','technology transfer','Nigerian subcontractors','local procurement','TB-003','IMA-IFD-0004-TBU-000003','Corporate Tax Compliance','NUPRC','TIN','Tax ID','CAC','CAMA Section 78','MoA','JV','Consortium','SPV','undertaking'], 'Tender Package / Exhibit M', 'IMA-IFD-00004-EXM', 'Search Nigerian Content, CAMA, NUPRC, CAC, TIN and contracting-structure obligations'),
+  node('tender-bulletins','Tender\nBulletins','bulletin','Tender Bulletins','Official tender revisions TB-001 to TB-010 for CFT IMA-IFD-00004. TB-001 revised closing date to 6 April 2026 14:00 CEST. TB-002 introduced COMPANY complementary procurement services for TEG, MRU and Gas Fiscal Metering Unit prospective vendors. TB-003 added Corporate, Tax Compliance, CAMA, CAC, TIN and NUPRC undertaking requirements. TB-004 issued NG-IMA-00-TOTA-000025 Rev.00 BNAG FEED Punch List. TB-005 revised TCC population/location, road transportation strategy, BOGT jetty assumptions and Autosampler demolition. TB-006 issued additional/revised Exhibit E documents. TB-007 replaced Exhibit E Attachment E.1 with rev1. TB-008 replaced Exhibit J Attachment J1 with rev1 approved subcontractors and vendors. TB-009 added Economic Sanctions and Export Control Questionnaire. TB-010 updated LLI vendor engagement and lead-time submission requirements for TEG, MRU and GMU.', ['TB','tender bulletin','revision','update','TB-001','TB-002','TB-003','TB-004','TB-005','TB-006','TB-007','TB-008','TB-009','TB-010','closing date','6 April 2026','TEG','MRU','GMU','Gas Fiscal Metering Unit','Corporate Tax Compliance','NUPRC','CAMA','CAC','TIN','BNAG FEED Punch List','NG-IMA-00-TOTA-000025','TCC','road transportation','Bodo Bonny road','BOGT jetty','Autosampler','Attachment E.1 rev1','Attachment J1 rev1','Economic Sanctions','Export Control','LLI','lead time'], 'Tender Package / Tender Bulletins / TBs_Combine.pdf', 'IMA-IFD-00004-TB-001-to-TB-010', 'Check tender bulletin revisions, affected exhibits and scope impacts'),
+  node('technical-clarifications','Technical\nClarifications','clarification','Technical Clarifications / TBC','Clarification register for bidder questions, COMPANY responses, technical assumptions, exclusions, qualifications, interface clarifications, SIMOPS, shutdown, logistics, commissioning, procurement, vendor and pricing clarifications. Tender Bulletins add clarification content including weekly vendor clarifications for TEG/MRU/GMU technical proposals, COMPANY deviation lists against the Design Dossier, BOGT jetty assumptions without operator drawings, TCC population assumptions and Exhibit E/Attachment E.1 document revisions. Vendor/Subcontractor clarification log now includes Himile Slug Catcher items 1-38, CEGELEC ICSS items 1-7, SPIE ICSS items 8-22, Petrofac Detailed Engineering items 1-9 and Endress Hauser Gas Metering items 1-19. Open points captured for search include EN10204 type 3.2 pressure retaining components, bonded logistics area/customs clarification, ocean lashing 20T clarification, HVAC Equipment List availability and TEG 11kV/690V transformer with 690V LV distribution board scope.', ['clarification','TBC','assumption','exclusion','qualification','response','COMPANY response','SIMOPS clarification','shutdown clarification','vendor clarification','TEG','MRU','GMU','Design Dossier deviation list','BOGT jetty','TCC assumptions','Attachment E.1 rev1','TB-002','TB-005','TB-007','TB-010','Himile','Slug Catcher','CEGELEC','SPIE','ICSS','Petrofac','Detailed Engineering','Endress Hauser','Gas Metering','Open clarification','Closed clarification','EN10204 3.2','bonded logistics area','customs clearance','ocean lashing','20T','HVAC Equipment List','TEG transformer','11kV 690V','LV Distribution Board'], 'Tender Package / Technical Clarifications', 'IMA-IFD-00004-TBC', 'Search vendor clarifications, COMPANY responses, open points and bulletin-driven assumptions'),
+  node('drawings-mtos','P&IDs\nDrawings\nMTOs','technical','P&IDs / Drawings / MTOs','Technical drawing and MTO set covering process flow, piping routing, tie-ins, existing facilities, new facilities, metering, telecom, ICSS, utilities, cable routing, FOC routing, layouts, battery limits, demolition scope, construction scope and discipline MTOs. Tender Bulletin TB-004 FEED punch list highlights drawing/MTO impacts: equipment tagging and line size consistency, TEG off gas recovery, PFP requirements, flare flowmeter 81-FIT-715, multicore/control cable schedules, pipe stress load cases, TP-81-02A weld overlay on P&ID NG-IMA-10-DORS-316319, BDV614 size alignment, new dedicated liquid separator/three-phase HP separator, MRU downstream of TEG and design pressure 95 barg.', ['P&ID','drawing','MTO','tie-in','routing','ICSS','telecom','cable','FOC routing','battery limits','demolition','TB-004','BNAG FEED Punch List','equipment tagging','line size','TEG off gas recovery','PFP','81-FIT-715','Instrument Cable Schedule','TP-81-02A','NG-IMA-10-DORS-316319','BDV614','HP Separator','MRU 95 barg'], 'Technical Attachments / P&IDs Drawings MTOs', 'IMA-IFD-00004-DWG-MTO', 'Search drawings, routing, quantities and FEED punch-list impacts'),
+  node('feed-dossier','FEED\nDossier','technical','FEED Design Dossier','FEED dossier covering FEED philosophy, deliverables, engineering basis, process philosophy, design assumptions, constructability, commissioning philosophy, operational philosophy, FEED studies, HAZOP, HAZID, SIL, QRA, FERA, constructability review and model reviews. Tender Bulletin TB-004 adds BNAG FEED Punch List NG-IMA-00-TOTA-000025 Rev.00 with common FEED actions and BNAG package punch items across ENG, STH, ELE, INS, SAF, PRO, COR, CIV, STR and PJM. Key items include 3D model tagging consistency, export pig receiver datasheet, new 11kV/690V transformer and switchboard for TEG, ITR layout optimization, gas fiscal metering segregation, ESDV PFP, TEG off gas recovery, CP design, open drain impacts, BNAG FERA, pipe stress updates, HIPS design modification, BOGT Safety Case addendum, structural steel specification update, LDS strategy and hardwired SIS signal definition.', ['FEED','philosophy','HAZOP','HAZID','SIL','QRA','FERA','constructability','model review','engineering basis','TB-004','BNAG FEED Punch List','NG-IMA-00-TOTA-000025','3D Model','Export Pig Receiver','11kV 690V transformer','ITR layout','Gas Fiscal Metering','ESDV PFP','TEG off gas recovery','CP design','open drain','BNAG FERA','pipe stress','HIPS','BOGT Safety Case','LDS','SIS hardwired signals'], 'Tender Package / FEED Design Dossier', 'IMA-IFD-00004-FEED', 'Navigate FEED punch-list assumptions, studies and reviews')
+];
+
+const RING2 = [
+  node('wp1','WP1','wp','WP1 - Management, Administrative and Project Control','PMT, planning, cost control, reporting, vendor coordination, subcontractor coordination, interface management, MWS/TPCA coordination, security/community coordination, document control, risk management, schedule control and governance across the EPSCC brownfield tender.', ['WP1','management','administrative','project control','PMT','planning','cost control','reporting','vendor coordination','subcontractor coordination','interface management','MWS','TPCA','security','community'], 'Exhibit A / WP1', 'Exhibit A WP1', 'Search PMT and project control deliverables'),
+  node('wp2','WP2','wp','WP2 - Temporary Construction Camp (TCC)','Pioneer camp, utilities, power generation, water treatment, sewage treatment, telecom, internet, accommodation, canteen, laundry, sickbay, GSF accommodation, maintenance, camp operation, HSE/security controls and decommissioning. Tender Bulletin TB-005 revises TCC assumptions: TCC serves Contractor/Subcontractor/Vendor personnel, COMPANY personnel and Government Security Forces; peak POB basis is 75 Contractor personnel, 35 COMPANY personnel and 65 GSF personnel; TCC area is 10,660 m2 with 459 m perimeter; temporary workshops, storage areas and parking lots area is 6,600 m2 with 400 m perimeter.', ['WP2','TCC','Temporary Construction Camp','pioneer camp','utilities','power generation','water treatment','sewage treatment','telecom','internet','accommodation','canteen','laundry','sickbay','GSF accommodation','TB-005','75 pax','35 pax','65 pax','10,660m2','459m perimeter','6,600m2','400m perimeter','temporary workshops','storage areas','parking lots'], 'Exhibit A / WP2', 'Exhibit A WP2', 'Search TCC facilities, revised POB basis and camp utilities'),
+  node('wp3','WP3','wp','WP3 - Engineering','Site survey, geotechnical survey, geophysical survey, laser scan, detailed engineering, transportation engineering, lifting engineering, field engineering, shutdown engineering, commissioning engineering, AFC, as-built, technical reviews, HAZOP/HAZID/SIL and discipline calculations. Petrofac Detailed Engineering clarifications confirm Kuala Lumpur home office execution, native ETAP model/library availability at DED start, onshore pipeline battery limit under EPCC 6, modularization basis for control valve platform/piperacks/E&I and electrical rooms, and precast foundation intent. Open engineering clarifications include HVAC Equipment List availability and whether the TEG 11kV/690V transformer plus 690V LV Distribution Board is inside this contract.', ['WP3','engineering','site survey','geotechnical','geophysical','laser scan','detailed engineering','transportation engineering','lifting engineering','field engineering','shutdown engineering','commissioning engineering','AFC','as-built','Petrofac','DED','Kuala Lumpur','ETAP model','ETAP library','EPCC 6','onshore pipeline battery limit','precast foundations','HVAC Equipment List','TEG transformer','11kV 690V','690V LV Distribution Board','Open clarification'], 'Exhibit A / WP3', 'Exhibit A WP3', 'Search engineering, Petrofac clarifications and AFC/as-built deliverables'),
+  node('wp4','WP4','wp','WP4 - Procurement and Supply','Procurement strategy, vendor management, expediting, logistics, customs clearance, preservation, warehousing, long lead items, commissioning spares, start-up consumables, vendor documents, FAT coordination, Nigerian procurement and material delivery interfaces. Tender Bulletins TB-002 and TB-010 make TEG Unit, MRU and Gas Fiscal Metering Unit key long-lead vendor packages; COMPANY shares technical proposals, vendor clarifications and deviation lists, while Tenderers must finalise commercial terms and submit PO-to-Ex-Works lead times by closing date.', ['WP4','procurement','supply','vendor management','expediting','logistics','customs clearance','preservation','warehousing','long lead items','commissioning spares','start-up consumables','TB-002','TB-010','LLI','TEG Unit','MRU','Gas Fiscal Metering Unit','GMU','technical proposal','vendor clarification','deviation list','lead time','Ex-Works'], 'Exhibit A / WP4', 'Exhibit A WP4', 'Search procurement, vendors, LLI lead times and spares'),
+  node('wp5','WP5','wp','WP5 - Prefabrication and Mechanical Completion','Fabrication, modularization, steelwork, pipework, E&I installation, telecom installation, FAT, preservation, coating/PFP, MC dossier, punch listing, dimensional control, QA/QC records and workshop mechanical completion activities.', ['WP5','prefabrication','mechanical completion','MC','fabrication','modularization','steelwork','pipework','E&I','telecom installation','FAT','preservation','coating','PFP','MC dossier','punch list'], 'Exhibit A / WP5', 'Exhibit A WP5', 'Search prefabrication, MC and punch scope'),
+  node('wp6','WP6','wp','WP6 - Transportation, Storage, Load-out and Offloading','Loadout, sea fastening, marine spread, barges, heavy transport, offloading, quayside operations, Bonny logistics, storage areas, preservation during transportation, customs constraints, lifting studies, MWS/TPCA interfaces and weather/transportation limitations. Tender Bulletin TB-005 revises transport philosophy: Bodo-Bonny road transportation is primary for personnel, Contractor items, construction equipment and COMPANY provided items that can travel by road; river transport remains for heavy/bulky loads. Route survey, security, loading, offloading and fastening are Contractor responsibilities. BOGT jetty must be surveyed/validated; normal conditions include 80MT and 70MT crawler cranes, channel draft 3.0 m at high water tide, average tidal range 2.0 m and no night operations.', ['WP6','transportation','storage','loadout','offloading','sea fastening','marine spread','barges','heavy transport','quayside','Bonny logistics','storage areas','preservation','TB-005','Bodo Bonny road','road transportation','river transportation','route survey','BOGT jetty','80MT crawler crane','70MT crawler crane','3.0m draft','2.0m tidal range','no night operations','bathymetry'], 'Exhibit A / WP6', 'Exhibit A WP6', 'Search revised road/river transport, BOGT jetty and transport preservation scope'),
+  node('wp7','WP7','wp','WP7 - Construction and Mechanical Completion at SITE','Brownfield installation, tie-ins, shutdown execution, SIMOPS, PTW, live plant work, piping installation, structure erection, E&I integration, ICSS integration, telecom integration, mechanical completion, site QA/QC, HSE controls and Nigerian site constraints. Tender Bulletin TB-005 adds demolition and off-site disposal of the BNAG Autosampler in Work Unit 7.2 because the reinforced concrete foundation and structural steel frame clash with the pipeline arrival area.', ['WP7','construction','mechanical completion at SITE','brownfield installation','tie-ins','shutdown','SIMOPS','PTW','live plant','piping installation','structure erection','E&I integration','ICSS integration','telecom integration','TB-005','Autosampler','Work Unit 7.2','demolition','disposal off SITE','reinforced concrete foundation','structural steel frame','pipeline arrival'], 'Exhibit A / WP7', 'Exhibit A WP7', 'Search site construction, Autosampler demolition and live plant work'),
+  node('wp8','WP8','wp','WP8 - Commissioning and Start-up Assistance','Systemization, pre-commissioning, flushing, loop checks, SAT, ICSS testing, cause and effect, dynamic commissioning, vendor assistance, CSU, start-up support, performance test support, AOC/RFC/RFSU interfaces and commissioning dossiers.', ['WP8','commissioning','start-up assistance','CSU','systemization','pre-commissioning','flushing','loop checks','SAT','ICSS testing','cause and effect','dynamic commissioning','vendor assistance','performance test','AOC','RFC','RFSU'], 'Exhibit A / WP8', 'Exhibit A WP8', 'Search CSU and commissioning handover'),
+  node('wp9','WP9','wp','WP9 - Operations and Maintenance','MIEC interfaces, O&M manuals, training, maintenance support, spare part philosophy, OEM support, maintainability input, inspection strategy, operations readiness and handover support to COMPANY operations.', ['WP9','operations','maintenance','MIEC','O&M manuals','training','maintenance support','spare parts','OEM support','operations readiness'], 'Exhibit A / WP9', 'Exhibit A WP9', 'Search operations readiness and MIEC'),
+  node('wp10','WP10','wp','WP10 - Final Documentation and Data','Final dossier, MDR, QA dossier, MC dossier, commissioning dossier, as-built, vendor records, turnover documentation, data books, certification, document close-out, electronic handover and COMPANY document control requirements.', ['WP10','final documentation','data','MDR','QA dossier','MC dossier','commissioning dossier','as-built','vendor records','turnover documentation','data book'], 'Exhibit A / WP10', 'Exhibit A WP10', 'Search final dossiers and MDR'),
+  node('wp11','WP11','wp','WP11 - Services and Facilities to COMPANY','COMPANY offices, transportation, accommodation, telecom, internet, secretarial support, printing facilities, meeting rooms, site support, shared facilities, camp allocation, logistics support, security support and administrative services to COMPANY personnel.', ['WP11','services to COMPANY','facilities to COMPANY','COMPANY offices','transportation','accommodation','telecom','internet','secretarial support','printing','meeting rooms','site support'], 'Exhibit A / WP11', 'Exhibit A WP11', 'Search services and facilities to COMPANY'),
+  node('wp12','WP12','wp','WP12 - Options','Official Exhibit A work package marked Not Used. Retained as a searchable contract placeholder for options, optional scope aliases, reserved package references, tender compliance checks and clarification cross-references without inventing additional scope.', ['WP12','Options','Not Used','option','optional scope','reserved','contract placeholder','no scope','clarification alias'], 'Exhibit A / WP12', 'Exhibit A WP12 - Not Used', 'Confirm WP12 remains Not Used')
+];
+
+const topicData = [
+ ['t-battery-limits','Battery\nLimits','technical','Battery Limits','Physical and contractual boundaries between new IMA facilities, existing BNAG/BOGT systems, COMPANY provided items, early contracts and Contractor scope. Key risks are ambiguous responsibility, missing isolation and incomplete interface data.',['battery limits','scope boundary','tie-in boundary','interface','Exhibit A','Exhibit I','WP3','WP7']],
+ ['t-interface-matrix','Interface\nMatrix','topic','Interface Matrix','Contractual and technical interface matrix linking COMPANY, Contractor, early contractors, CSP, SURF, pipeline, drilling, ICSS, telecom, power and operations; covers owner, milestone, deliverable, risk and approval interfaces.',['interface matrix','interface register','interface management','CSP','SURF','pipeline','drilling','ICSS','telecom','power','Exhibit G','Exhibit I']],
+ ['t-bnag','BNAG','technical','BNAG','Existing BNAG facility context for live hydrocarbon plant work, process tie-ins, utilities, ICSS, telecom, power, PTW, SIMOPS, shutdown windows and operations interfaces at SITE.',['BNAG','existing facility','live plant','process system','tie-in','SIMOPS','shutdown','PTW','WP7']],
+ ['t-bogt','BOGT','technical','BOGT','Existing BOGT facility and terminal context for IMA integration, including gas/liquid metering, utilities, telecom, electrical interfaces, operations constraints, security and Bonny logistics.',['BOGT','existing facility','terminal','gas metering','liquid metering','utilities','Bonny Island']],
+ ['t-nlng','NLNG','logistics','NLNG','Bonny Island neighbor and logistics/security context affecting access, marine movements, community interfaces, restrictions and stakeholder coordination. Search anchor only, not invented scope.',['NLNG','Bonny Island','logistics','security','community','stakeholder','marine movement']],
+ ['t-bonny','Bonny\nIsland','logistics','Bonny Island','Execution location constraint for personnel movement, marine logistics, quayside limits, storage, security, GSF/PSC coordination, community management, weather, customs, workforce and camp operations.',['Bonny Island','Bonny','Nigeria','logistics','security','community','quayside','marine','customs','GSF','PSC']],
+ ['t-existing-facilities','Existing\nFacilities','technical','Existing Facilities','Existing BNAG/BOGT process, utility, ICSS, telecom, electrical and safety systems to be integrated; requires survey, laser scan, demolition, tie-ins, isolation, SIMOPS and as-built verification.',['existing facilities','existing ICSS','existing telecom','existing electrical','existing process','laser scan','demolition','as-built']],
+ ['t-brownfield','Brownfield\nExecution','technical','Brownfield Execution','Live plant modification philosophy covering operations interfaces, PTW, isolation, shutdown tie-ins, SIMOPS/COMOPS, constructability, contingency, HSE barriers, QA verification and operations acceptance.',['brownfield','live plant','modification','integration','PTW','tie-in','shutdown','SIMOPS','COMOPS','constructability']],
+ ['t-tieins','Tie-ins','technical','Tie-ins','Physical and control-system tie-ins to existing hydrocarbon, utility, ICSS, telecom, electrical and safety systems requiring tie-in register, isolation, shutdown window, PTW, SIMOPS, spool readiness, QA and commissioning.',['tie-in','tie-ins','isolation','shutdown','PTW','SIMOPS','spool','ICSS','telecom','power','P&ID']],
+ ['t-shutdown','Shutdown','hse','Shutdown','Planned shutdown philosophy for brownfield tie-ins: isolation, depressurization, permits, readiness, pre-fabrication, contingency, operations approvals, restart sequence and production impact risk.',['shutdown','shutdown window','isolation','depressurization','restart','tie-in','critical path','milestone']],
+ ['t-simops','SIMOPS','hse','SIMOPS - Simultaneous Operations','Controls simultaneous construction, commissioning, operations, logistics, lifting and security activities on live facilities through SIMOPS plan, PTW matrix, risk assessment, exclusion zones and daily coordination.',['SIMOPS','Simultaneous Operations','live plant','PTW','COMOPS','HSE','risk assessment','exclusion zone','lifting']],
+ ['t-comops','COMOPS','hse','COMOPS - Combined Operations','Combined Operations interface between construction, operations, commissioning, marine logistics and security; linked to PTW, SIMOPS, shutdown preparation, start-up and emergency response.',['COMOPS','Combined Operations','SIMOPS','PTW','commissioning','construction','marine','security','ERP']],
+ ['t-ptw','PTW','hse','PTW - Permit To Work','Permit To Work system controlling hot work, cold work, confined space, electrical isolation, lifting, radiography/NDT, SIMOPS, live plant access and shift handover.',['PTW','Permit To Work','permit','hot work','cold work','confined space','electrical isolation','lifting permit']],
+ ['t-tcc','TCC','services','TCC - Temporary Construction Camp','Temporary Construction Camp scope for accommodation, canteen, utilities, power, water treatment, sewage, telecom, internet, laundry, sickbay, GSF accommodation, maintenance and decommissioning. TB-005 revised the TCC basis: 75 Contractor/Subcontractor/Vendor personnel, 35 COMPANY personnel, 65 Government Security Forces personnel, TCC plot 10,660 m2 / 459 m perimeter, and workshops-storage-parking plot 6,600 m2 / 400 m perimeter.',['TCC','Temporary Construction Camp','pioneer camp','camp','accommodation','canteen','power generation','water treatment','GSF','TB-005','75 pax','35 pax','65 pax','10,660m2','6,600m2','workshops','storage','parking']],
+ ['t-security','Security','hse','Security','Security management for Bonny and Niger Delta execution: risk assessment, GSF/PSC, access control, escorts, journey management, marine movement security, ERP, incident reporting and community risks.',['security','GSF','PSC','escort','access control','journey management','Niger Delta','community','ERP']],
+ ['t-community','Community','nigerian','Community Management','Community management obligations covering local stakeholder engagement, community workforce, grievances, security coordination, Nigerian Content links, communication protocols and access risk.',['community','community management','stakeholder','local workforce','grievance','Nigerian Content','security']],
+ ['t-nigerian-content','Nigerian\nContent','nigerian','Nigerian Content','NOGICD requirements for manpower, local fabrication, local construction, local commissioning, training, technology transfer, human capital development, Nigerian subcontractors, local procurement and reporting. TB-003 adds corporate/tax/NUPRC compliance: unregistered JV or consortium, registered JV/SPV, subcontracting arrangements, MoA, Section 78 CAMA foreign contractor incorporation, NUPRC certificate, CAC incorporation, TIN/Tax ID and signed undertaking.',['Nigerian Content','NOGICD','NCDMB','local manpower','local fabrication','training','technology transfer','local procurement','TB-003','CAMA','Section 78','NUPRC','CAC','TIN','Tax ID','MoA','JV','Consortium','SPV','undertaking']],
+ ['t-services-company','Services to\nCOMPANY','services','Services to COMPANY','Contractor obligations for COMPANY offices, transportation, accommodation, telecom, internet, secretarial support, printing, meeting rooms, site support, camp allocation and administration.',['services to COMPANY','COMPANY services','offices','transportation','accommodation','telecom','internet','meeting rooms','WP11']],
+ ['t-cpi','CPI','services','COMPANY Provided Items','COMPANY Provided Items and free issue materials/services, including delivery, inspection, preservation, battery limits, early contractor interfaces and risk allocation for late or incomplete CPI.',['CPI','COMPANY Provided Items','free issue','delivery responsibility','preservation','interface','Exhibit I']],
+ ['t-avl','AVL','technical','Approved Vendors','Approved Vendor List and vendor qualification philosophy for equipment, materials, inspection agencies, laboratories, specialist subcontractors, NDT contractors, weather providers, certifying authority and TPCA. TB-008 replaces Exhibit J Attachment J1 with rev1 approved subcontractors and vendors, including metering vendors Emerson, Endress Hauser, Krohne, ODS; TEG/MRU package vendors Axens, Enerflex, REPCo, NOV, Schlumberger/SLB, Himile, Lanpec, Honeywell/UOP, CECO and Process Systems where applicable.',['AVL','Approved Vendors','Approved Vendor List','vendor qualification','OEM','NDT contractor','TPCA','TB-008','Attachment J1 rev1','Emerson','Endress Hauser','Krohne','ODS','Axens','Enerflex','REPCo','NOV','Schlumberger','SLB','Himile','Lanpec','Honeywell UOP','CECO','Process Systems']],
+ ['t-spares','Spare\nParts','technical','Spare Parts','Spare part philosophy covering commissioning spares, start-up consumables, capital spares, OEM recommendations, storage, handover lists, maintenance support and pricing links.',['spare parts','commissioning spares','start-up consumables','capital spares','OEM','handover']],
+ ['t-special-tools','Special\nTools','technical','Special Tools','Special, preservation and maintenance tools for installation, commissioning, start-up, inspection and operations support; linked to OEM packages, FAT/SAT and handover.',['special tools','maintenance tools','preservation tools','OEM tools','commissioning tools','FAT','SAT']],
+ ['t-hse-incentive','HSE\nIncentive','hse','HSE Incentive','Commercial/HSE mechanism linking safe execution, reward/sanction logic, HSE performance, incident reporting, life saving rules, audits and payment treatment.',['HSE incentive','reward','sanction','life saving rules','incident reporting','audit','commercial']],
+ ['t-ld','LD','contract','Liquidated Damages','Contractual LD exposure tied to delay, performance guarantees, acceptance milestones and completion obligations, with links to schedule, critical path, performance tests, claims and variations.',['LD','Liquidated Damages','delay damages','performance damages','critical path','acceptance','claims','variation']],
+ ['t-performance-guarantees','Performance\nGuarantees','contract','Performance Guarantees','Process, availability and reliability guarantees plus performance test acceptance, retest, remedial action, commissioning completion and acceptance certificate logic.',['performance guarantees','guarantee','availability','reliability','performance test','retest','acceptance certificate']],
+ ['t-work-schedule','Work\nSchedule','topic','Work Schedule','Contract schedule framework covering Level 1/2/3 planning, baseline, revisions, float, critical path, shutdown and interface milestones, EPC/CSU milestones and reporting. TB-001 revises tender closing date to 6 April 2026 14:00 CEST. TB-002/TB-010 identify TEG, MRU and GMU as schedule-sensitive LLIs and require PO-to-Ex-Works lead-time submissions by closing date.',['work schedule','schedule','baseline','Level 1','Level 2','Level 3','critical path','float','milestones','TB-001','TB-002','TB-010','closing date','6 April 2026','LLI','TEG','MRU','GMU','lead time','Ex-Works']],
+ ['t-key-dates','Key\nDates','topic','Key Dates','Contract key dates for bid submission, award, NTP, engineering, procurement, fabrication, loadout, construction, shutdowns, commissioning, AOC, RFC, RFSU and final documentation.',['key dates','milestone dates','NTP','award','shutdown','commissioning','AOC','RFC','RFSU','acceptance']],
+ ['t-milestone-payments','Milestone\nPayments','contract','Milestone Payments','Commercial milestone payment logic tied to WP/WU pricing, engineering, procurement, prefabrication, loadout, site MC, commissioning, final documentation and invoice certification.',['milestone payments','payment milestone','invoice','payment certification','pricing','WP pricing','WU pricing']],
+ ['t-wbs','WBS','topic','WBS','Work Breakdown Structure linking exhibits, WP1-WP12, work units, schedule activities, progress weights, cost codes, manhours, document control and reporting.',['WBS','Work Breakdown Structure','WP','WU','progress weight','cost code','manhours','reporting']],
+ ['t-progress-measurement','Progress\nMeasurement','topic','Progress Measurement','Weighted physical progress logic for engineering, procurement, fabrication, construction, MC, commissioning, final documentation, schedule reporting, manhours and payment certification.',['progress measurement','weighted progress','physical progress','progress weight','manhours','productivity','payment certification']],
+ ['t-ccm','CCM','topic','CCM - Contract Coordination Manual','Contract Coordination Manual governing communication, reporting, interface management, document control, WBS, meetings, planning levels, approvals, deliverables and COMPANY/Contractor coordination.',['CCM','Contract Coordination Manual','coordination','communication matrix','reporting','document control','interface management']],
+ ['t-project-reporting','Project\nReporting','topic','Project Reporting','Daily, weekly and monthly reporting for progress, manhours, HSE, QA/QC, procurement, engineering, construction, commissioning, risks, interfaces, lookahead and document status.',['project reporting','daily report','weekly report','monthly report','manhours','HSE stats','QAQC','lookahead']],
+ ['t-qaqc','QA/QC','hse','QA/QC','Quality assurance/control framework for ITPs, vendor surveillance, inspection release, welding, NDT, traceability, dimensional control, preservation, FAT/SAT, NCR, punch, TPCA and dossiers. Himile Slug Catcher clarifications capture ASME VIII-2 Class 2/U2 Stamp, ASME Authorized Inspector, Client Third Party Big 4 approval, EN10204 type 3.2 for bolts/gaskets and pressure retaining parts, third-party laboratory/certification costs, material certificates, ATEX declarations, hazardous area certificates, leak test, lifting calculation, sea fastening and O&M manual VDRL requirements.',['QAQC','QA/QC','quality assurance','quality control','ITP','NDT','traceability','NCR','punch','TPCA','Himile','Slug Catcher','ASME VIII-2','U2 Stamp','Authorized Inspector','Big 4','EN10204','type 3.2','Material Certificate','ATEX','hazardous area certificate','leak test','VDRL','certification','third party laboratory']],
+ ['t-itp','ITP','hse','ITP - Inspection and Test Plan','Inspection and Test Plan defining hold, witness, review and surveillance points for fabrication, construction, coating/PFP, E&I, telecom, FAT, SAT, MC and commissioning.',['ITP','Inspection and Test Plan','hold point','witness point','inspection','test','FAT','SAT','MC']],
+ ['t-quality-dossier','Quality\nDossier','hse','Quality Dossier','Quality dossier compiling ITPs, inspection reports, material certificates, welding/NDT records, preservation, FAT/SAT records, NCR closeout, punch closeout, TPCA certificates and turnover evidence.',['quality dossier','QA dossier','inspection records','material certificates','welding records','NDT records','preservation records']],
+ ['t-final-doc','Final\nDocumentation','topic','Final Documentation','Final documentation and data handover covering MDR, as-built, vendor records, QA dossier, MC dossier, commissioning dossier, O&M manuals, certificates and turnover packs.',['final documentation','MDR','Master Document Register','as-built','vendor records','QA dossier','MC dossier','commissioning dossier','O&M manuals']],
+ ['t-pids','P&IDs','technical','P&IDs','Process and Instrumentation Diagrams defining process tie-ins, controls, safeguards, demolition, new/existing facilities, metering, utilities, battery limits, line lists, instrument indexes and MTO basis.',['P&ID','PID','Process and Instrumentation Diagram','process','instrumentation','tie-in','cause and effect','MTO']],
+ ['t-mto','MTO','technical','MTO - Material Take-Off','Material Take-Off quantities from FEED and drawings for piping, structural, civil, electrical, instrument, telecom, PFP/coating and bulk materials; links procurement, pricing, fabrication, logistics and construction.',['MTO','Material Take-Off','quantity','bulk materials','piping MTO','structural MTO','electrical MTO','instrument MTO']],
+ ['t-slug-catcher','Slug\nCatcher','technical','Slug Catcher Area','Main process area for incoming production handling and IMA integration, linked to piping, instrumentation, ICSS, safety systems, tie-ins, P&IDs, MTOs, pre-commissioning and commissioning. Himile clarification register confirms scope limited to blue border on P&ID NG-IMA-11-DORS-318002, PSV platforms outside blue frame excluded, P&ID legend NG-IMA-10-DORS-316740, Y-filter flowrate 22772 kg/hr/density 998.6 kg/m3/MW 32.55/filter #1500/100-150 micron, 16 inch P-81003-H03-F excluded from vendor scope, skid structural frame included in option 2, S275JR structure specification deviation to Q355D not accepted, all pressurised vessel level transmitters DP type, SDV-335 requires I/P positioner, solenoid valve EEx d and field instruments EEx i, lighting/hand-held communicator excluded, non-sour service confirmed, Schoepentoeter required, N5 solid SS allowed, internal support clips welded to base material not cladding, PFP required for 30 min emergency blowdown, PFP MTO for slug catcher and associated piping required. Open Himile points: EN10204 type 3.2 pressure retaining component clarification, bonded logistics/customs clarification, ocean lashing 20T clarification.',['Slug Catcher','slug catcher area','process','tie-in','piping','instrumentation','ICSS','P&ID','MTO','Himile','NG-IMA-11-POS-441002','NG-IMA-11-DORS-318002','blue border','NG-IMA-10-DORS-316740','Y-type filter','22772 kg/hr','998.6 kg/m3','MW 32.55','#1500','100 micron','150 micron','P-81003-H03-F','S275JR','Q355D','LIT-331','LIT-333','DP transmitter','SDV-335','I/P positioner','EEx d','EEx i','non-sour service','HIC','SSC','SCC','Schoepentoeter','N5 solid SS','PFP 30 minutes','EN10204 3.2','bonded logistics','ocean lashing','20T','Open clarification']],
+ ['t-pig-receiver','Pig\nReceiver','technical','Pig Receiver Area','Pig receiver area scope covering piping, pigging interfaces, tie-ins, isolation, valve operation, instrumentation, safety systems, MTOs, construction access and commissioning readiness.',['Pig Receiver','pig trap','pigging','piping','valves','tie-in','isolation','instrumentation']],
+ ['t-teg','TEG','technical','TEG Area','TEG dehydration area integration context for process, utilities, piping, instrumentation, controls, safety systems, tie-ins, operations interfaces and commissioning.',['TEG','dehydration','process','utilities','piping','instrumentation','controls','safety','tie-in']],
+ ['t-mru','MRU','technical','MRU Area','Mercury Removal Unit area and package interfaces covering process integration, vendor package requirements, hazardous material handling, preservation, installation, ICSS/instrument interfaces, FAT/SAT and start-up support.',['MRU','Mercury Removal Unit','mercury','vendor package','hazardous material','preservation','ICSS','FAT','SAT']],
+ ['t-gas-metering','Gas\nMetering','technical','Gas Metering Area','Gas metering integration including metering skid/interfaces, instrumentation, ICSS, telecom, power, calibration, FAT/SAT, performance validation and commissioning handover. Endress Hauser Gas Metering clarifications note drip pan removed for gas metering but maintained for liquid metering, no flow conditioners for 8-path ultrasonic meters noted, temperature gauges required per TR/specification, pressure rating shall follow piping class, 12 inch meter runs must still satisfy pressure drop/erosion/AIV criteria, two MOVs per run required, HCDP analyser required, C9+ PGC six-minute cycle and E+H Enersic600 C6+ 45-second option to be quoted, 316L transmitter housing required, painting/coating NG-IMA-00-DORS-451010 and spares/tools NG-IMA-00-DORS-551024 referenced, A36 skid steel requires GS EP STR 103/401, expanded plug valve for master meter run and gate valves at inlets required, automatic sampling point required.',['Gas Metering','metering','flow meter','instrumentation','ICSS','telecom','power','calibration','FAT','SAT','Endress Hauser','drip pan','Liquid Metering','flow conditioner','8-path ultrasonic','OIML R137','AGA 9','temperature gauges','600#','900#','12 inch meter run','pressure drop','AIV','two MOVs per run','HCDP analyser','PGC','C9+','C6+','Enersic600','316L transmitter housing','NG-IMA-00-DORS-451010','NG-IMA-00-DORS-551024','GS EP STR 103','GS EP STR 401','expanded plug valve','automatic sampling']],
+ ['t-liquid-metering','Liquid\nMetering','technical','Liquid Metering Area','Liquid metering integration covering equipment, piping, instrumentation, controls, calibration, utilities, ICSS, telecom, FAT/SAT, commissioning and performance validation.',['Liquid Metering','metering','liquid measurement','instrumentation','controls','calibration','ICSS','FAT','SAT']],
+ ['t-icss','ICSS','technical','ICSS','Existing Integrated Control and Safety System integration for DCS/ESD/F&G, graphics, alarms, cause and effect, loop checks, SAT, shutdown logic, telecom/power dependencies and operations acceptance. CEGELEC and SPIE ICSS clarifications cover HIPS Technical Requisition NG-IMA-11-POS-150002_TR, ICSS TR NG-IMA-11-POS-150003_TR, I/O master-count sizing using higher count documents, PCS cabinet updated to 2 each 600W x 800D x 2100H while cabinet sizing remains bidder responsibility, hardwired links to existing ESD and F&G matrix panels, optional new Matrix/Mimic panel proposal, BNAG/BOGT matrix/mimic budgetary estimate using existing panels, BNAG IOs estimation including BOGT PDCS Interface I/O List, ICSS additional documents, scope split where external fibre optic cables to Telecom cabinets/packages/MCCs are Telecom scope, CIF delivery to Vung Tau yard for ICSS/electrical cabinets, onshore BNAG plant training, WHP ICSS by other contractor, and final SPIE I/O count PAS 217, SIS 96, FGS 84, total 397 I/Os.',['ICSS','Integrated Control and Safety System','DCS','ESD','F&G','SIS','cause and effect','loop checks','SAT','CEGELEC','SPIE','HIPS','NG-IMA-11-POS-150002_TR','NG-IMA-11-POS-150003_TR','NG-IMA-11-DORS-471021','NG-IMA-11-DORS-471020','NG-IMA-10-DORS-479103','PCS cabinet','600W 800D 2100H','matrix panel','mimic panel','hardwired link','PDCS Interface I/O List','PAS 217','SIS 96','FGS 84','397 I/O','Telecom scope','CIF Vung Tau','WHP ICSS']],
+ ['t-telecom','Telecom','technical','Telecom','Existing telecom integration for voice, data, network, FOC, radio/CCTV/PA-GA where applicable, camp telecom, internet, testing, SAT and operations/security communication interfaces.',['telecom','telecommunications','network','FOC','voice','data','radio','CCTV','PA-GA','internet']],
+ ['t-foc','FOC','technical','FOC - Fibre Optic Cable','Fibre Optic Cable routing, termination, testing and integration with telecom systems, ICSS/network dependencies, cable tray/routing constraints, OTDR testing, SAT and as-built documentation.',['FOC','Fibre Optic Cable','fiber optic cable','routing','termination','OTDR','telecom','network','ICSS']],
+ ['t-power-cable','Power\nCable','technical','Power Cable','Electrical power cable scope for existing power integration, new loads, routing, trays, terminations, testing, energization, isolation, permits, SAT and as-built records.',['power cable','electrical cable','power integration','cable routing','cable tray','termination','energization','electrical isolation']],
+ ['t-pfp','PFP','hse','PFP - Passive Fire Protection','Passive Fire Protection scope for fire-rated protection on structures/equipment where specified, including inspection, repair, coating/PFP systems, material qualification, application procedure, QA/QC, curing, certification and MTO impact.',['PFP','Passive Fire Protection','fireproofing','intumescent','coating','fire protection','inspection','certification']],
+ ['t-miec','MIEC','technical','MIEC - Maintenance and Inspection Engineering Contractor','Maintenance and Inspection Engineering Contractor interface for O&M, inspection strategy, maintainability, spare parts, maintenance tools, operations readiness, documentation and handover inputs.',['MIEC','Maintenance and Inspection Engineering Contractor','O&M','maintenance','inspection strategy','spare parts','maintenance tools']],
+ ['t-commissioning','Commissioning','technical','Commissioning','Commissioning philosophy covering systemization, pre-commissioning completion, flushing, loop checks, SAT, cause and effect validation, ICSS testing, dynamic commissioning, vendor assistance, AOC/RFC/RFSU and start-up support.',['commissioning','CSU','Commissioning and Start-Up','systemization','pre-commissioning','flushing','loop checks','SAT','AOC','RFC','RFSU']],
+ ['t-startup-assistance','Start-up\nAssistance','technical','Start-up Assistance','Contractor and vendor assistance during start-up, performance test support, troubleshooting, spares/consumables readiness, operations handover, OEM support and acceptance certificate interfaces.',['start-up assistance','startup assistance','start-up','vendor assistance','performance test','OEM support','RFSU','AOC']],
+ ['t-performance-test','Performance\nTest','contract','Performance Test','Test program validating process performance guarantees, availability/reliability assumptions and acceptance criteria; related to commissioning completion, conditions, remedial actions, retest, LD and final acceptance.',['performance test','performance guarantee','acceptance criteria','retest','remedial action','operating conditions','LD']],
+ ['t-aoc','AOC','topic','AOC - Achievement Of Commissioning','Achievement Of Commissioning milestone/certificate indicating commissioning completion status for relevant systems and linking dossiers, punch status, SAT records, operations acceptance and payments.',['AOC','Achievement Of Commissioning','commissioning certificate','commissioning dossier','punch','SAT','acceptance']],
+ ['t-rfc','RFC','topic','RFC - Ready For Commissioning','Ready For Commissioning status confirming construction/MC and pre-commissioning prerequisites are complete enough to transfer a system into commissioning.',['RFC','Ready For Commissioning','MC','Mechanical Completion','pre-commissioning','punch','QA records']],
+ ['t-rfsu','RFSU','topic','RFSU - Ready For Start-Up','Ready For Start-Up status confirming commissioning completion, safety checks, operations readiness, vendor support, spares readiness and documentation sufficient for start-up and performance testing.',['RFSU','Ready For Start-Up','start-up','commissioning complete','operations readiness','vendor support','spares']],
+ ['t-afc','AFC','technical','AFC - Approved For Construction','Approved For Construction deliverables issued after design review, COMPANY approval and incorporation of comments; linked to detailed engineering, MTOs, fabrication, field engineering and construction packs.',['AFC','Approved For Construction','engineering deliverable','design review','COMPANY approval','revision control','construction pack']],
+ ['t-asbuilt','As-built','technical','As-built','As-built documentation reflecting final installed condition after field changes, tie-ins, construction, commissioning and operations acceptance; includes redlines, drawings, data, vendor records and final handover.',['as-built','asbuilt','redline','final drawings','field changes','tie-in records','P&ID','vendor records']],
+ ['t-hazop','HAZOP','hse','HAZOP','Hazard and Operability review supporting FEED and detailed engineering for process safety, tie-ins, controls, safeguards, operating envelopes, actions and design validation.',['HAZOP','Hazard and Operability','process safety','FEED','detailed engineering','tie-in','safeguarding']],
+ ['t-hazid','HAZID','hse','HAZID','Hazard Identification review for brownfield execution, construction, logistics, SIMOPS, security, community, commissioning and operations interfaces; feeds risk register and mitigations.',['HAZID','Hazard Identification','risk register','brownfield','construction','logistics','SIMOPS','security']],
+ ['t-sil','SIL','hse','SIL','Safety Integrity Level review and verification for safety instrumented functions, SIS/ESD interfaces, ICSS, cause and effect, proof testing, loop checks and commissioning validation.',['SIL','Safety Integrity Level','SIS','ESD','ICSS','cause and effect','proof test','loop check']],
+ ['t-qra','QRA','hse','QRA','Quantitative Risk Assessment supporting design and execution risk understanding for hydrocarbon facilities, occupied areas, fire/explosion, emergency response, SIMOPS and ALARP demonstration.',['QRA','Quantitative Risk Assessment','risk','fire','explosion','emergency response','SIMOPS','ALARP']],
+ ['t-fera','FERA','hse','FERA','Fire and Explosion Risk Assessment supporting PFP, layout, emergency response, detection/protection, hazardous area considerations, SIMOPS controls and design verification.',['FERA','Fire and Explosion Risk Assessment','PFP','fire','explosion','emergency response','hazardous area']],
+ ['t-fat','FAT','technical','FAT - Factory Acceptance Test','Factory Acceptance Test for vendor packages, ICSS/telecom equipment, electrical panels, metering, MRU and other systems before shipment; linked to surveillance, ITP, quality records, spares and release.',['FAT','Factory Acceptance Test','vendor package','vendor surveillance','ITP','quality records','ICSS','telecom','metering']],
+ ['t-sat','SAT','technical','SAT - Site Acceptance Test','Site Acceptance Test for installed systems, ICSS, telecom, electrical, metering and vendor packages after installation; linked to loop checks, cause and effect, commissioning, punch closeout and operations acceptance.',['SAT','Site Acceptance Test','ICSS','telecom','electrical','metering','loop checks','cause and effect','commissioning']],
+ ['t-preservation','Preservation','technical','Preservation','Preservation requirements from procurement through warehousing, transport, storage, prefabrication, installation, commissioning and handover, including records, inspections, OEM recommendations and tools.',['preservation','storage preservation','transport preservation','OEM recommendation','warehouse','inspection','records','preservation tools']],
+ ['t-loadout','Loadout','logistics','Loadout','Loadout execution for fabricated items and equipment, including lifting plans, sea fastening, MWS/TPCA review, quayside constraints, weather criteria, preservation, documentation and transport readiness.',['loadout','load-out','lifting plan','sea fastening','MWS','TPCA','quayside','weather criteria','transport readiness']],
+ ['t-sea-fastening','Sea\nFastening','logistics','Sea Fastening','Sea fastening design and verification for marine transport of fabricated items/equipment, linked to transportation engineering, MWS/TPCA, vessel/barge selection, loadout, weather, preservation and offloading.',['sea fastening','marine transport','transportation engineering','MWS','TPCA','barge','vessel','loadout','offloading']],
+ ['t-lifting','Lifting','hse','Lifting','Lifting engineering and operations for fabrication, loadout, offloading, site construction and equipment installation, including lift plans, crane constraints, rigging, critical lifts, PTW, SIMOPS and exclusion zones.',['lifting','lift plan','critical lift','crane','rigging','offloading','loadout','PTW','SIMOPS']],
+ ['t-heavy-transport','Heavy\nTransport','logistics','Heavy Transport','Heavy transport scope for oversized/heavy equipment, modules, prefabricated items and vendor packages through workshop, port/quayside, marine spread, Bonny logistics and SITE offloading.',['heavy transport','transportation','oversized cargo','module','vendor package','quayside','marine spread','Bonny logistics']],
+ ['t-vendor-packages','Vendor\nPackages','technical','Vendor Packages','Vendor package management for MRU, metering, ICSS/telecom/electrical equipment and specialist systems covering AVL, documents, FAT, spares, tools, preservation, commissioning support and OEM assistance. TB-002 and TB-010 define COMPANY complementary vendor engagement for TEG Unit, Mercury Removal Unit and Gas Fiscal Metering Unit; vendors may propose technical alternatives subject to gap analysis and COMPANY approval; declined vendors include Enerflex for TEG/MRU, Axens for TEG/MRU, Process Systems for TEG, CECO for TEG/MRU and Honeywell/UOP for MRU per TB-010. Clarification coverage now includes Himile Slug Catcher package, CEGELEC/SPIE ICSS packages, Petrofac Detailed Engineering and Endress Hauser Gas Metering package with scope splits, vendor exclusions, mandatory options, VDRL, spares/tools, certification, commercial bonds and delivery assumptions.',['vendor packages','vendor management','OEM','AVL','vendor documents','FAT','spares','special tools','commissioning support','TB-002','TB-010','TEG Unit','MRU','GMU','Gas Fiscal Metering Unit','technical alternative','gap analysis','COMPANY approval','declined vendor','Enerflex','Axens','Process Systems','CECO','Honeywell UOP','Himile','CEGELEC','SPIE','Petrofac','Endress Hauser','Slug Catcher','ICSS','Gas Metering','VDRL','performance bond','warranty bond','delivery assumption']],
+ ['t-logistics-base','Logistics\nBase','logistics','Logistics Base','Logistics base for materials, personnel, storage, customs, preservation, marine coordination, security, Bonny movements, quayside operations, documentation, dangerous goods and ERP interface. TB-005 makes road transportation via the new Bodo-Bonny road the primary means for road-transportable personnel, Contractor items, construction equipment and COMPANY provided items, with river transportation retained for heavy/bulky loads; BOGT jetty has 3.0 m draft at high water tide, 2.0 m average tidal range and no night operations. Himile open clarification asks whether customs clearance can be performed at Himile fabrication yard or whether goods must enter bonded warehouse / Bonded Logistics Area; ocean lashing quoted as 20T remains to be clarified.',['logistics base','logistics','storage','customs','preservation','marine coordination','security','Bonny','quayside','dangerous goods','TB-005','Bodo Bonny road','road transportation','river transportation','BOGT jetty','3.0m draft','2.0m tidal range','no night operations','route survey','Himile','bonded logistics area','bonded warehouse','customs clearance','fabrication yard','ocean lashing','20T','Open clarification']],
+ ['t-rates','Rates','contract','Rates','Personnel, equipment and variation rates used for reimbursables, compensation events, additional/reduced facilities, claims, change orders and pricing assumptions.',['rates','personnel rates','equipment rates','variation rates','reimbursable','compensation event','change order','claims']],
+ ['t-variation','Variation','contract','Variation','Variation/change process for additions, reductions, compensation events, technical changes, commercial impacts, schedule impacts, claims, approvals and supporting documentation.',['variation','change order','compensation event','scope change','additional facilities','reduced facilities','claims']],
+ ['t-document-control','Document\nControl','topic','Document Control','Document control philosophy for MDR, numbering, review cycles, transmittals, approvals, revision control, technical review comments, AFC status, as-built status and final handover.',['document control','MDR','Master Document Register','document numbering','transmittal','revision control','approval']],
+ ['t-manpower-histogram','Manpower\nHistogram','topic','Manpower Histogram','Manpower planning and histogram logic linked to schedule, productivity, WP execution, Nigerian Content, mobilization, camp sizing, site constraints, HSE supervision and reporting.',['manpower histogram','manpower','resource plan','mobilization','productivity','Nigerian Content','camp sizing']],
+ ['t-pmt','PMT','topic','PMT - Project Management Team','Project Management Team structure covering project manager, engineering, procurement, construction, commissioning, HSE, QA/QC, interface, planning, cost, document control, security/community and camp roles.',['PMT','Project Management Team','organization','key personnel','project manager','engineering manager','construction manager']],
+ ['t-erp','ERP','hse','ERP - Emergency Response Plan','Emergency Response Plan for site, camp, logistics and marine operations covering medevac, oil spill, security incidents, fire/explosion response, communication, drills, COMPANY bridging and local resources.',['ERP','Emergency Response Plan','emergency response','medevac','oil spill','security incident','fire response','drills']]
+];
+
+const RING3 = topicData.map(([id,label,type,title,desc,tags]) => node(id,label,type,title,desc,tags, 'Tender Brain / Topics / ' + title, 'Topic Reference / ' + id, 'Search related exhibits, WP, disciplines, deliverables, risks and procedures'));
+
+const ALL_NODES = [...RING0, ...RING1, ...RING2, ...RING3];
+
+/* -- Links -- */
+const GRAPH_LINKS = [
+  ...RING1.map(n => ['ctr', n.id]), ...RING2.map(n => ['ctr', n.id]), ...RING3.map(n => ['ctr', n.id]),
+  ...RING2.map(n => ['ex-a', n.id]),
+  ['ex-a','t-tieins'],['ex-a','t-simops'],['ex-a','t-shutdown'],['ex-a','t-battery-limits'],['ex-a','t-services-company'],['ex-a','t-brownfield'],['ex-a','t-commissioning'],['ex-a','t-afc'],['ex-a','t-asbuilt'],
+  ['ex-b','t-rates'],['ex-b','t-milestone-payments'],['ex-b','t-hse-incentive'],['ex-b','t-ld'],['ex-b','t-variation'],
+  ['ex-c','t-work-schedule'],['ex-c','t-key-dates'],['ex-c','t-manpower-histogram'],['ex-c','t-progress-measurement'],['ex-c','t-wbs'],['ex-c','t-shutdown'],
+  ['ex-d','t-performance-guarantees'],['ex-d','t-performance-test'],['ex-d','t-commissioning'],['ex-d','t-aoc'],['ex-d','t-rfsu'],
+  ['ex-e','t-pids'],['ex-e','t-mto'],['ex-e','feed-dossier'],['ex-e','drawings-mtos'],['ex-e','t-slug-catcher'],['ex-e','t-pig-receiver'],['ex-e','t-teg'],['ex-e','t-mru'],['ex-e','t-gas-metering'],['ex-e','t-liquid-metering'],['ex-e','t-icss'],['ex-e','t-telecom'],['ex-e','t-foc'],['ex-e','t-power-cable'],['ex-e','t-pfp'],['ex-e','t-afc'],
+  ['ex-f','t-logistics-base'],['ex-f','t-loadout'],['ex-f','t-heavy-transport'],['ex-f','t-sea-fastening'],['ex-f','t-lifting'],['ex-f','t-bonny'],['ex-f','t-security'],
+  ['ex-g','t-ccm'],['ex-g','t-project-reporting'],['ex-g','t-wbs'],['ex-g','t-progress-measurement'],['ex-g','t-document-control'],['ex-g','t-interface-matrix'],['ex-g','t-manpower-histogram'],
+  ['ex-h','t-qaqc'],['ex-h','t-itp'],['ex-h','t-fat'],['ex-h','t-sat'],['ex-h','t-quality-dossier'],['ex-h','t-preservation'],
+  ['ex-i','t-cpi'],['ex-i','t-interface-matrix'],['ex-i','t-icss'],['ex-i','t-telecom'],['ex-i','t-power-cable'],['ex-i','t-battery-limits'],
+  ['ex-j','t-avl'],['ex-j','t-spares'],['ex-j','t-special-tools'],['ex-j','t-vendor-packages'],['ex-j','t-fat'],
+  ['ex-k','t-pmt'],['ex-k','wp1'],['ex-k','wp3'],['ex-k','wp8'],['ex-k','t-manpower-histogram'],
+  ['ex-l','t-hse-incentive'],['ex-l','t-ptw'],['ex-l','t-simops'],['ex-l','t-comops'],['ex-l','t-security'],['ex-l','t-community'],['ex-l','t-erp'],['ex-l','t-lifting'],['ex-l','t-bonny'],
+  ['ex-m','t-nigerian-content'],['ex-m','t-community'],['ex-m','t-manpower-histogram'],['ex-m','wp4'],['ex-m','wp5'],['ex-m','wp7'],
+  ['tender-bulletins','t-mru'],['tender-bulletins','t-pfp'],['tender-bulletins','t-tcc'],['tender-bulletins','t-logistics-base'],['tender-bulletins','drawings-mtos'],
+  
+  ['drawings-mtos','t-pids'],['drawings-mtos','t-mto'],['drawings-mtos','t-tieins'],['drawings-mtos','t-battery-limits'],['drawings-mtos','t-icss'],['drawings-mtos','t-telecom'],['drawings-mtos','t-foc'],['drawings-mtos','t-power-cable'],
+  ['feed-dossier','t-hazop'],['feed-dossier','t-hazid'],['feed-dossier','t-sil'],['feed-dossier','t-qra'],['feed-dossier','t-fera'],['feed-dossier','t-brownfield'],['feed-dossier','t-pids'],
+  ['wp1','t-pmt'],['wp1','t-ccm'],['wp1','t-project-reporting'],['wp1','t-wbs'],['wp1','t-progress-measurement'],['wp1','t-interface-matrix'],['wp1','t-security'],['wp1','t-community'],
+  ['wp2','t-tcc'],['wp2','t-security'],['wp2','t-community'],['wp2','t-erp'],['wp2','t-services-company'],['wp2','t-bonny'],
+  ['wp3','t-afc'],['wp3','t-asbuilt'],['wp3','t-pids'],['wp3','t-mto'],['wp3','t-hazop'],['wp3','t-hazid'],['wp3','t-sil'],['wp3','t-lifting'],['wp3','t-battery-limits'],
+  ['wp4','t-vendor-packages'],['wp4','t-avl'],['wp4','t-spares'],['wp4','t-preservation'],['wp4','t-fat'],['wp4','t-logistics-base'],['wp4','t-nigerian-content'],
+  ['wp5','t-fat'],['wp5','t-preservation'],['wp5','t-pfp'],['wp5','t-qaqc'],['wp5','t-itp'],['wp5','t-rfc'],['wp5','t-quality-dossier'],
+  ['wp6','t-loadout'],['wp6','t-sea-fastening'],['wp6','t-heavy-transport'],['wp6','t-logistics-base'],['wp6','t-bonny'],['wp6','t-lifting'],['wp6','t-preservation'],
+  ['wp7','t-brownfield'],['wp7','t-tieins'],['wp7','t-shutdown'],['wp7','t-simops'],['wp7','t-comops'],['wp7','t-ptw'],['wp7','t-icss'],['wp7','t-telecom'],['wp7','t-power-cable'],['wp7','t-rfc'],['wp7','t-qaqc'],
+  ['wp8','t-commissioning'],['wp8','t-startup-assistance'],['wp8','t-sat'],['wp8','t-aoc'],['wp8','t-rfc'],['wp8','t-rfsu'],['wp8','t-performance-test'],['wp8','t-icss'],['wp8','t-vendor-packages'],
+  ['wp9','t-miec'],['wp9','t-spares'],['wp9','t-special-tools'],['wp9','t-startup-assistance'],['wp9','t-final-doc'],['wp9','t-vendor-packages'],
+  ['wp10','t-final-doc'],['wp10','t-document-control'],['wp10','t-quality-dossier'],['wp10','t-asbuilt'],['wp10','t-miec'],['wp10','t-aoc'],['wp10','t-rfsu'],
+  ['wp11','t-services-company'],['wp11','t-tcc'],['wp11','t-telecom'],['wp11','t-security'],['wp11','t-bonny'],['wp12','technical-clarifications'],
+  ['t-bnag','t-existing-facilities'],['t-bogt','t-existing-facilities'],['t-existing-facilities','t-brownfield'],['t-bonny','t-nlng'],['t-bonny','t-security'],['t-bonny','t-community'],['t-bonny','t-logistics-base'],
+  ['t-tieins','t-shutdown'],['t-tieins','t-simops'],['t-tieins','t-battery-limits'],['t-tieins','t-pids'],['t-shutdown','t-work-schedule'],['t-shutdown','t-key-dates'],['t-simops','t-ptw'],['t-simops','t-comops'],['t-comops','t-erp'],
+  ['t-pids','t-mto'],['t-pids','t-icss'],['t-pids','t-tieins'],['t-icss','t-telecom'],['t-icss','t-foc'],['t-icss','t-sat'],['t-telecom','t-foc'],['t-power-cable','t-icss'],
+  ['t-slug-catcher','t-pids'],['t-pig-receiver','t-pids'],['t-teg','t-pids'],['t-mru','t-vendor-packages'],['t-gas-metering','t-vendor-packages'],['t-liquid-metering','t-vendor-packages'],
+  ['t-commissioning','t-aoc'],['t-commissioning','t-rfc'],['t-commissioning','t-rfsu'],['t-commissioning','t-performance-test'],['t-rfc','t-rfsu'],['t-aoc','t-performance-test'],
+  ['t-hazop','t-sil'],['t-hazid','t-qra'],['t-qra','t-fera'],['t-fera','t-pfp'],['t-fat','t-vendor-packages'],['t-sat','t-commissioning'],
+  ['t-preservation','t-spares'],['t-loadout','t-sea-fastening'],['t-loadout','t-lifting'],['t-heavy-transport','t-logistics-base'],['t-vendor-packages','t-spares'],['t-vendor-packages','t-special-tools'],
+  ['t-wbs','t-progress-measurement'],['t-progress-measurement','t-milestone-payments'],['t-ccm','t-document-control'],['t-ccm','t-project-reporting'],['t-pmt','t-manpower-histogram'],['t-nigerian-content','t-community'],['t-ld','t-performance-guarantees']
+];
+
+/* ═══════ CANVAS ENGINE — FORCE-DIRECTED NETWORK ═══════ */
+const cv    = document.getElementById('brain-cv');
+const ctx2d = cv.getContext('2d');
+const wrap  = document.getElementById('tbCanvasWrap');
+const tipEl = document.getElementById('tbTip');
+
+let CW = 0, CH = 0, DPR = 1;
+let nodePos = {};
+let hlNodes = new Set();
+let selNode = null; let hoverNode = null;
+let tick = 0; let animId = null;
+
+/* Degree */
+const DEGREE = {};
+ALL_NODES.forEach(n => { DEGREE[n.id] = 0; });
+GRAPH_LINKS.forEach(([s,t]) => { DEGREE[s]=(DEGREE[s]||0)+1; DEGREE[t]=(DEGREE[t]||0)+1; });
+
+/* Visual by degree — size + color */
+function nodeVis(id){
+  const d = DEGREE[id]||0;
+  if(id==='ctr')  return { r:11,  fill:'#7dd6f0', glow:'125,214,240' };
+  if(d>=14)       return { r:8.5, fill:'#f0c040', glow:'240,192,64'  };
+  if(d>=9)        return { r:7,   fill:'#e8b830', glow:'232,184,48'  };
+  if(d>=5)        return { r:5.4, fill:'#4aabcc', glow:'74,171,204'  };
+  if(d>=2)        return { r:3.7, fill:'#2e8090', glow:'46,128,144'  };
+  return                 { r:2.6, fill:'rgba(157,232,255,0.68)', glow:'157,232,255' };
+}
+
+function drawGraphBackground(){
+  ctx2d.fillStyle='#252b37';
+  ctx2d.fillRect(0,0,CW,CH);
+
+  const rg=ctx2d.createRadialGradient(CW*0.5,CH*0.46,0,CW*0.5,CH*0.46,Math.max(CW,CH)*0.68);
+  rg.addColorStop(0,'rgba(54,78,105,0.54)');
+  rg.addColorStop(0.55,'rgba(37,43,55,0.28)');
+  rg.addColorStop(1,'rgba(7,11,17,0.62)');
+  ctx2d.fillStyle=rg;
+  ctx2d.fillRect(0,0,CW,CH);
+
+  ctx2d.save();
+  ctx2d.strokeStyle='rgba(202,238,251,0.025)';
+  ctx2d.lineWidth=1;
+  for(let x=40;x<CW;x+=80){ ctx2d.beginPath(); ctx2d.moveTo(x,0); ctx2d.lineTo(x,CH); ctx2d.stroke(); }
+  for(let y=40;y<CH;y+=80){ ctx2d.beginPath(); ctx2d.moveTo(0,y); ctx2d.lineTo(CW,y); ctx2d.stroke(); }
+  ctx2d.restore();
+}
+
+function fillRoundRect(x,y,w,h,r){
+  const rr=Math.min(r,w/2,h/2);
+  ctx2d.beginPath();
+  ctx2d.moveTo(x+rr,y);
+  ctx2d.lineTo(x+w-rr,y);
+  ctx2d.quadraticCurveTo(x+w,y,x+w,y+rr);
+  ctx2d.lineTo(x+w,y+h-rr);
+  ctx2d.quadraticCurveTo(x+w,y+h,x+w-rr,y+h);
+  ctx2d.lineTo(x+rr,y+h);
+  ctx2d.quadraticCurveTo(x,y+h,x,y+h-rr);
+  ctx2d.lineTo(x,y+rr);
+  ctx2d.quadraticCurveTo(x,y,x+rr,y);
+  ctx2d.closePath();
+  ctx2d.fill();
+}
+
+/* ── Force simulation ── */
+const sim = {};
+const SP_LEN  = 75;   /* spring rest length px */
+const SP_K    = 0.0028;
+const REPULSE = 1600;
+const GRAVITY = 0.003;
+const DAMP    = 0.80;
+
+function initSim(){
+  ALL_NODES.forEach((n,i)=>{
+    const a=(i/ALL_NODES.length)*Math.PI*2;
+    const rv=Math.min(CW,CH)*0.28 + (Math.random()-0.5)*40;
+    sim[n.id]={ x:CW/2+rv*Math.cos(a), y:CH/2+rv*Math.sin(a), vx:0, vy:0 };
+  });
+  /* Pre-warm: 400 steps with progressive cooling */
+  for(let i=0;i<400;i++) _step(Math.max(0.68, 0.90-i*0.00055));
+}
+
+function _step(dm){
+  const ids=ALL_NODES.map(n=>n.id);
+  /* Repulsion O(n²) — fine for 51 nodes */
+  for(let i=0;i<ids.length;i++) for(let j=i+1;j<ids.length;j++){
+    const a=sim[ids[i]], b=sim[ids[j]];
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const d2=dx*dx+dy*dy+0.5, d=Math.sqrt(d2);
+    const f=REPULSE/d2, fx=dx/d*f, fy=dy/d*f;
+    a.vx-=fx; a.vy-=fy; b.vx+=fx; b.vy+=fy;
+  }
+  /* Springs */
+  GRAPH_LINKS.forEach(([sid,tid])=>{
+    const a=sim[sid], b=sim[tid]; if(!a||!b) return;
+    const dx=b.x-a.x, dy=b.y-a.y, d=Math.sqrt(dx*dx+dy*dy)||1;
+    const f=SP_K*(d-SP_LEN), fx=dx/d*f, fy=dy/d*f;
+    a.vx+=fx; a.vy+=fy; b.vx-=fx; b.vy-=fy;
+  });
+  /* Gravity + integrate */
+  ids.forEach(id=>{
+    const s=sim[id];
+    s.vx+=(CW/2-s.x)*GRAVITY; s.vy+=(CH/2-s.y)*GRAVITY;
+    s.vx*=dm; s.vy*=dm;
+    s.x+=s.vx; s.y+=s.vy;
+    s.x=Math.max(14,Math.min(CW-14,s.x));
+    s.y=Math.max(14,Math.min(CH-14,s.y));
+  });
+}
+
+function syncPos(){
+  ALL_NODES.forEach(n=>{
+    const s=sim[n.id]; if(!s) return;
+    nodePos[n.id]={ x:s.x, y:s.y, r:nodeVis(n.id).r };
+  });
+}
+
+function resize(){
+  DPR=window.devicePixelRatio||1;
+  CW=wrap.clientWidth; CH=wrap.clientHeight;
+  cv.width=CW*DPR; cv.height=CH*DPR;
+  cv.style.width=CW+'px'; cv.style.height=CH+'px';
+  ctx2d.setTransform(DPR,0,0,DPR,0,0);
+  initSim(); syncPos();
+}
+
+/* ── Links ── */
+function drawLinks(){
+  const sortedLinks=[...GRAPH_LINKS].sort((a,b)=>{
+    const ah=hlNodes.has(a[0])||hlNodes.has(a[1])||a[0]===selNode||a[1]===selNode;
+    const bh=hlNodes.has(b[0])||hlNodes.has(b[1])||b[0]===selNode||b[1]===selNode;
+    return Number(ah)-Number(bh);
+  });
+  sortedLinks.forEach(([sid,tid])=>{
+    const s=nodePos[sid], t=nodePos[tid]; if(!s||!t) return;
+    const isHl=hlNodes.has(sid)||hlNodes.has(tid)||sid===selNode||tid===selNode;
+    const isCenterLink=sid==='ctr'||tid==='ctr';
+    ctx2d.beginPath(); ctx2d.moveTo(s.x,s.y); ctx2d.lineTo(t.x,t.y);
+    ctx2d.strokeStyle=isHl?'rgba(125,214,240,0.58)':isCenterLink?'rgba(202,238,251,0.038)':'rgba(202,238,251,0.075)';
+    ctx2d.lineWidth=isHl?1.05:0.55;
+    ctx2d.stroke();
+  });
+}
+
+/* ── Nodes ── */
+function drawNodes(){
+  /* Draw in degree order so large nodes paint over small */
+  const sorted=[...ALL_NODES].sort((a,b)=>(DEGREE[a.id]||0)-(DEGREE[b.id]||0));
+  sorted.forEach(n=>{
+    const p=nodePos[n.id]; if(!p) return;
+    const vis=nodeVis(n.id);
+    const isHl=hlNodes.has(n.id), isSel=n.id===selNode, isHov=n.id===hoverNode;
+    const r=vis.r+(isSel?3.5:isHov?1.5:0);
+    const d=DEGREE[n.id]||0;
+
+    /* Glow — restrained, used to define hierarchy */
+    if(n.id==='ctr'||isSel||isHov||d>=9){
+      const gR=r*(isSel?4:isHov?3:2.2);
+      const gA=n.id==='ctr'?0.22:isSel?0.30:isHov?0.22:isHl?0.16:0.10;
+      const g=ctx2d.createRadialGradient(p.x,p.y,r*0.2,p.x,p.y,gR);
+      g.addColorStop(0,`rgba(${vis.glow},${gA})`);
+      g.addColorStop(1,`rgba(${vis.glow},0)`);
+      ctx2d.beginPath(); ctx2d.arc(p.x,p.y,gR,0,Math.PI*2);
+      ctx2d.fillStyle=g; ctx2d.fill();
+    }
+
+    /* Node dot */
+    ctx2d.save();
+    ctx2d.shadowColor=`rgba(${vis.glow},${isSel||isHov?0.44:0.20})`;
+    ctx2d.shadowBlur=isSel||isHov?13:d>=9?8:4;
+    ctx2d.beginPath(); ctx2d.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx2d.fillStyle=isSel?'#CAEEFB':isHl?'#90c8ff':vis.fill;
+    ctx2d.fill();
+    ctx2d.shadowBlur=0;
+    ctx2d.strokeStyle='rgba(255,255,255,0.22)';
+    ctx2d.lineWidth=0.75;
+    ctx2d.stroke();
+    ctx2d.restore();
+
+    /* Selection ring */
+    if(isSel){
+      ctx2d.beginPath(); ctx2d.arc(p.x,p.y,r+4,0,Math.PI*2);
+      ctx2d.strokeStyle='rgba(202,238,251,0.55)'; ctx2d.lineWidth=1;
+      ctx2d.setLineDash([3,4]); ctx2d.stroke(); ctx2d.setLineDash([]);
+    }
+
+    /* Label — center always; others only hover/select */
+    const showLabel=n.id==='ctr'||isSel||isHov;
+    if(showLabel){
+      const lines=n.label.split('\n');
+      const fs=n.id==='ctr'?11:10, lh=fs+2;
+      ctx2d.save();
+      ctx2d.font=`bold ${fs}px 'Times New Roman',Times,serif`;
+      ctx2d.textAlign='center'; ctx2d.textBaseline='top';
+      const ly=p.y+r+4;
+      if(n.id==='ctr'){
+        const bw=78, bh=lines.length*lh+10;
+        ctx2d.fillStyle='rgba(9,16,26,0.72)';
+        fillRoundRect(p.x-bw/2,ly-4,bw,bh,6);
+        ctx2d.strokeStyle='rgba(202,238,251,0.18)';
+        ctx2d.stroke();
+      }
+      lines.forEach((ln,li)=>{
+        ctx2d.fillStyle='rgba(0,0,0,0.50)';
+        ctx2d.fillText(ln,p.x+0.6,ly+li*lh+0.6);
+        ctx2d.fillStyle=isSel?'#CAEEFB':isHov?'#d8f0ff':'rgba(200,225,255,0.95)';
+        ctx2d.fillText(ln,p.x,ly+li*lh);
+      });
+      ctx2d.restore();
+    }
+  });
+}
+
+/* ── Main loop ── */
+function draw(){
+  tick++;
+  /* Continue gentle settling for first 180 frames, then micro-nudge every 6f */
+  if(tick<=180) _step(DAMP - tick*0.0006);
+  else if(tick%6===0) _step(0.45);
+  syncPos();
+
+  ctx2d.clearRect(0,0,CW,CH);
+  drawGraphBackground();
+  drawLinks();
+  drawNodes();
+  animId=requestAnimationFrame(draw);
+}
+
+/* ── Hit test ── */
+function hitTest(ex, ey){
+  const rect = cv.getBoundingClientRect();
+  const mx = ex - rect.left, my = ey - rect.top;
+  for(const n of [...ALL_NODES].reverse()){
+    const p = nodePos[n.id];
+    if(!p) continue;
+    const dx = mx - p.x, dy = my - p.y;
+    if(Math.sqrt(dx*dx + dy*dy) <= p.r + 4) return n;
+  }
+  return null;
+}
+
+cv.addEventListener('mousemove', e => {
+  const n = hitTest(e.clientX, e.clientY);
+  hoverNode = n ? n.id : null;
+  cv.style.cursor = n ? 'pointer' : 'default';
+  if(n){
+    showTooltip(n, e.clientX, e.clientY);
+  } else {
+    tipEl.style.display = 'none';
+  }
+});
+
+cv.addEventListener('mouseleave', () => {
+  hoverNode = null;
+  tipEl.style.display = 'none';
+  cv.style.cursor = 'default';
+});
+
+cv.addEventListener('click', e => {
+  const n = hitTest(e.clientX, e.clientY);
+  if(n){
+    selectNode(n.id);
+    highlightCard(n.id);
+    showDetail(n.id);
+  } else {
+    selNode = null;
+    hlNodes.clear();
+    document.querySelectorAll('.tb-card').forEach(c => c.classList.remove('active'));
+    document.getElementById('tbDetail').classList.remove('open');
+  }
+});
+
+function showTooltip(n, cx, cy){
+  const rect = wrap.getBoundingClientRect();
+  const ns = NSTYLE[n.type] || NSTYLE.topic;
+  tipEl.innerHTML = `
+    <div class="tb-tooltip-title">${n.title}</div>
+    <div class="tb-tooltip-desc">${n.desc.substring(0,100)}…</div>
+    <div class="tb-tooltip-tags">${(n.tags||[]).slice(0,4).map(t=>`<span class="tb-tooltip-tag">${t}</span>`).join('')}</div>
+  `;
+  tipEl.style.display = 'block';
+  let lx = cx - rect.left + 14, ly = cy - rect.top + 14;
+  const tw = tipEl.offsetWidth || 220;
+  if(lx + tw > CW - 10) lx = cx - rect.left - tw - 14;
+  if(ly + 120 > CH)     ly = cy - rect.top - 120;
+  tipEl.style.left = lx + 'px';
+  tipEl.style.top  = ly + 'px';
+}
+
+function selectNode(id){
+  selNode = id;
+  hlNodes = new Set();
+  GRAPH_LINKS.forEach(([s, t]) => {
+    if(s === id) hlNodes.add(t);
+    if(t === id) hlNodes.add(s);
+  });
+  hlNodes.add(id);
+}
+
+/* ═══════ SEARCH & FILTER ENGINE ═══════ */
+let activeFilter = 'all';
+let searchQuery  = '';
+
+const TYPE_TO_FILTER = {
+  contract:'contract', exhibit:'exhibit', wp:'wp', technical:'technical',
+  bulletin:'bulletin', clarification:'clarification', nigerian:'nigerian',
+  services:'services', hse:'hse', logistics:'logistics', topic:'topic', center:'all'
+};
+
+function nodeMatchesFilter(n){
+  if(activeFilter === 'all') return true;
+  return TYPE_TO_FILTER[n.type] === activeFilter;
+}
+
+function scoreNode(n, q){
+  if(!q) return 1;
+  const ql = q.toLowerCase();
+  let score = 0;
+  if(n.title.toLowerCase().includes(ql))       score += 30;
+  if(n.id.toLowerCase().includes(ql))           score += 20;
+  if(n.label.toLowerCase().replace('\n',' ').includes(ql)) score += 18;
+  if((n.tags||[]).some(t => t.toLowerCase().includes(ql))) score += 12;
+  if(n.desc.toLowerCase().includes(ql))         score += 5;
+  if((n.reference||'').toLowerCase().includes(ql)) score += 8;
+  if((n.documentPath||'').toLowerCase().includes(ql)) score += 4;
+  return score;
+}
+
+function renderResults(){
+  const q      = searchQuery.trim();
+  const list   = document.getElementById('tbResults');
+  const count  = document.getElementById('tbCount');
+  let   nodes  = ALL_NODES.filter(n => nodeMatchesFilter(n));
+
+  if(q){
+    nodes = nodes.map(n => ({ n, s: scoreNode(n, q) }))
+                 .filter(x => x.s > 0)
+                 .sort((a,b) => b.s - a.s)
+                 .map(x => x.n);
+  }
+
+  count.textContent = nodes.length + (q ? ' match' + (nodes.length!==1?'es':'') : ' nodes');
+
+  if(nodes.length === 0){
+    list.innerHTML = `
+      <div class="tb-empty">
+        <div class="tb-empty-icon">⬡</div>
+        <div class="tb-empty-title">No direct match found.</div>
+        <div class="tb-empty-hint">Try one of these keywords to explore the knowledge map:</div>
+        <div class="tb-empty-hints">
+          ${['TCC','WP3','SIMOPS','Nigerian Content','P&ID','Commissioning','Security','ICSS','FOC','MRU','Tie-in','HP Separator','Logistics']
+            .map(k=>`<span class="tb-empty-kw" data-kw="${k}">${k}</span>`).join('')}
+        </div>
+      </div>`;
+    list.querySelectorAll('.tb-empty-kw').forEach(el => {
+      el.addEventListener('click', () => {
+        document.getElementById('tbSearch').value = el.dataset.kw;
+        searchQuery = el.dataset.kw;
+        document.getElementById('tbClear').style.display = 'block';
+        renderResults();
+      });
+    });
+    return;
+  }
+
+  list.innerHTML = nodes.map(n => {
+    const ns    = NSTYLE[n.type] || NSTYLE.topic;
+    const badge = badgeFor(n.type);
+    const wpBadge = n.type === 'wp' ? `<span class="tb-meta-wp">${n.label}</span>` : '';
+    return `<div class="tb-card" data-id="${n.id}">
+      <div class="tb-card-top">
+        <div class="tb-card-title">${n.title}</div>
+        <span class="tb-badge ${badge.cls}">${badge.lbl}</span>
+      </div>
+      <div class="tb-card-desc">${n.desc.substring(0,90)}…</div>
+      <div class="tb-card-meta">
+        ${wpBadge}
+        ${(n.tags||[]).slice(0,3).map(t=>`<span class="tb-meta-tag">${t}</span>`).join('')}
+        ${n.documentPath ? `<span class="tb-meta-path">${n.documentPath}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  list.querySelectorAll('.tb-card').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.id;
+      selectNode(id);
+      showDetail(id);
+      highlightCard(id);
+      /* pan graph to node */
+    });
+  });
+}
+
+function badgeFor(type){
+  const map = {
+    center:        { cls:'tb-badge-contract',      lbl:'Core'         },
+    contract:      { cls:'tb-badge-contract',      lbl:'Contract'     },
+    exhibit:       { cls:'tb-badge-exhibit',       lbl:'Exhibit'      },
+    wp:            { cls:'tb-badge-wp',            lbl:'Work Package' },
+    technical:     { cls:'tb-badge-technical',     lbl:'Technical'    },
+    bulletin:      { cls:'tb-badge-bulletin',      lbl:'Bulletin'     },
+    clarification: { cls:'tb-badge-clarification', lbl:'Clarification'},
+    nigerian:      { cls:'tb-badge-nigerian',      lbl:'Nig. Content' },
+    services:      { cls:'tb-badge-services',      lbl:'Services'     },
+    hse:           { cls:'tb-badge-hse',           lbl:'HSE / QA'     },
+    logistics:     { cls:'tb-badge-logistics',     lbl:'Logistics'    },
+    topic:         { cls:'tb-badge-topic',         lbl:'Topic'        }
+  };
+  return map[type] || map.topic;
+}
+
+function highlightCard(id){
+  document.querySelectorAll('.tb-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === id);
+  });
+  const card = document.querySelector(`.tb-card[data-id="${id}"]`);
+  if(card) card.scrollIntoView({ block:'nearest', behavior:'smooth' });
+}
+
+/* ── Detail panel ── */
+function showDetail(id){
+  const n = ALL_NODES.find(x => x.id === id);
+  if(!n) return;
+  const panel  = document.getElementById('tbDetail');
+  const inner  = document.getElementById('tbDetailInner');
+  const badge  = badgeFor(n.type);
+  const related = [];
+  GRAPH_LINKS.forEach(([s, t]) => {
+    if(s === id) related.push(t);
+    if(t === id) related.push(s);
+  });
+  const uniqueRel = [...new Set(related)].filter(r => r !== id);
+  const icons = { contract:'📄', exhibit:'📋', wp:'🔧', technical:'⚙️', bulletin:'📢',
+                  clarification:'💬', nigerian:'🇳🇬', services:'🤝', hse:'⛑️',
+                  logistics:'🚁', topic:'🔍', center:'🧠' };
+
+  inner.innerHTML = `
+    <div class="tb-detail-top">
+      <div class="tb-detail-icon">${icons[n.type]||'📄'}</div>
+      <div class="tb-detail-info">
+        <div class="tb-detail-title">${n.title}</div>
+        <div class="tb-detail-badges">
+          <span class="tb-badge ${badge.cls}">${badge.lbl}</span>
+          ${n.type==='wp'?`<span class="tb-badge tb-badge-wp">${n.label}</span>`:''}
+        </div>
+        <div class="tb-detail-desc">${n.desc}</div>
+      </div>
+    </div>
+    <div class="tb-detail-grid">
+      <div class="tb-detail-field">
+        <div class="tb-detail-field-label">Document Path</div>
+        <div class="tb-detail-field-value">${n.documentPath||'—'}</div>
+      </div>
+      <div class="tb-detail-field">
+        <div class="tb-detail-field-label">Reference</div>
+        <div class="tb-detail-field-value">${n.reference||'—'}</div>
+      </div>
+      <div class="tb-detail-field">
+        <div class="tb-detail-field-label">Tags</div>
+        <div class="tb-detail-field-value">${(n.tags||[]).join(' · ')||'—'}</div>
+      </div>
+      <div class="tb-detail-field">
+        <div class="tb-detail-field-label">Suggested Action</div>
+        <div class="tb-detail-field-value">${n.action||'—'}</div>
+      </div>
+    </div>
+    ${uniqueRel.length ? `
+    <div class="tb-detail-related">
+      <div class="tb-detail-related-label">Connected nodes (${uniqueRel.length})</div>
+      <div class="tb-detail-related-nodes">
+        ${uniqueRel.map(rid => {
+          const rn = ALL_NODES.find(x => x.id === rid);
+          return rn ? `<button class="tb-rel-btn" data-id="${rid}">${rn.label.replace('\n',' ')}</button>` : '';
+        }).join('')}
+      </div>
+    </div>` : ''}
+    <button class="tb-detail-action" id="tbDetailAction">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2"><circle cx="7" cy="7" r="5"/><line x1="7" y1="4" x2="7" y2="7"/><line x1="7" y1="7" x2="9.5" y2="9.5"/></svg>
+      ${n.action||'View document'}
+    </button>
+  `;
+
+  panel.classList.add('open');
+
+  inner.querySelectorAll('.tb-rel-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const rid = btn.dataset.id;
+      selectNode(rid);
+      showDetail(rid);
+      highlightCard(rid);
+    });
+  });
+}
+
+function resetTenderBrain(){
+  const search = document.getElementById('tbSearch');
+  const clear  = document.getElementById('tbClear');
+  const detail = document.getElementById('tbDetail');
+  const detailInner = document.getElementById('tbDetailInner');
+
+  search.value = '';
+  clear.style.display = 'none';
+  searchQuery = '';
+  activeFilter = 'all';
+  hlNodes.clear();
+  selNode = null;
+
+  document.querySelectorAll('.tb-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.filter === 'all');
+  });
+  document.querySelectorAll('.tb-card').forEach(c => c.classList.remove('active'));
+  detail.classList.remove('open');
+  detailInner.innerHTML = '';
+  renderResults();
+}
+
+/* ── Event wiring ── */
+document.getElementById('tbSearch').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  document.getElementById('tbClear').style.display = searchQuery ? 'block' : 'none';
+  renderResults();
+  if(searchQuery){
+    const matches = ALL_NODES.filter(n => scoreNode(n, searchQuery) > 0);
+    hlNodes = new Set(matches.map(n => n.id));
+    selNode = null;
+  } else {
+    hlNodes.clear();
+    selNode = null;
+  }
+});
+
+document.getElementById('tbClear').addEventListener('click', () => {
+  document.getElementById('tbSearch').value = '';
+  document.getElementById('tbClear').style.display = 'none';
+  searchQuery = '';
+  hlNodes.clear();
+  selNode = null;
+  renderResults();
+});
+
+document.getElementById('tbChips').addEventListener('click', e => {
+  const chip = e.target.closest('.tb-chip');
+  if(!chip) return;
+  document.querySelectorAll('.tb-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeFilter = chip.dataset.filter;
+  renderResults();
+});
+
+document.getElementById('tbReset').addEventListener('click', resetTenderBrain);
+
+/* ── Boot ── */
+window.addEventListener('resize', () => { resize(); });
+resize();
+renderResults();
+draw();
+</script>
+<script src="ima-animations.js"></script>
+<script src="ima-assistant.js"></script>
+</body>
+</html>
